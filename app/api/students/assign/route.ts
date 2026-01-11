@@ -106,7 +106,8 @@ export async function POST(request: Request) {
                     to_department: targetGroup?.department || student.department,
                     assigned_by: user.id,
                     assigned_by_email: admin.email,
-                    reason: reason || null
+                    reason: reason || null,
+                    assigned_at: new Date().toISOString()
                 };
             });
 

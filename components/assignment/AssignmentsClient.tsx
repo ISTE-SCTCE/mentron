@@ -19,6 +19,7 @@ export function AssignmentsClient({ userRole, userDepartment }: AssignmentsClien
     const [showReassignModal, setShowReassignModal] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
     const [activeTab, setActiveTab] = useState<'unassigned' | 'history'>('unassigned');
+    const [manualAssignmentId, setManualAssignmentId] = useState<string | null>(null);
 
     function handleAssignmentComplete() {
         setSelectedStudentIds([]);
@@ -144,6 +145,10 @@ export function AssignmentsClient({ userRole, userDepartment }: AssignmentsClien
                             selectedStudentIds={selectedStudentIds}
                             onStudentsSelect={setSelectedStudentIds}
                             userDepartment={userDepartment}
+                            onAssignSingle={(id) => {
+                                setManualAssignmentId(id);
+                                setShowAssignModal(true);
+                            }}
                         />
                     ) : (
                         <AssignmentHistory key={refreshKey} />
@@ -154,8 +159,11 @@ export function AssignmentsClient({ userRole, userDepartment }: AssignmentsClien
             {/* Assignment Modal (for new assignments) */}
             <StudentAssignmentModal
                 isOpen={showAssignModal}
-                onClose={() => setShowAssignModal(false)}
-                selectedStudentIds={selectedStudentIds}
+                onClose={() => {
+                    setShowAssignModal(false);
+                    setManualAssignmentId(null);
+                }}
+                selectedStudentIds={manualAssignmentId ? [manualAssignmentId] : selectedStudentIds}
                 onAssignmentComplete={handleAssignmentComplete}
             />
 

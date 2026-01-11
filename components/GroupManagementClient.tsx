@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { DndContext, DragOverlay, closestCenter, DragEndEvent, DragStartEvent } from '@dnd-kit/core';
+import { DndContext, DragOverlay, closestCenter, DragEndEvent, DragStartEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { CreateGroupModal } from '@/components/CreateGroupModal';
 import { GroupCard } from '@/components/GroupCard';
 import { StudentCard } from '@/components/StudentCard';
@@ -78,6 +78,15 @@ export function GroupManagementClient({
     const [deleteStudent, setDeleteStudent] = useState<Student | null>(null);
     const [hierarchyStats, setHierarchyStats] = useState<HierarchyStats | null>(null);
     const [refreshKey, setRefreshKey] = useState(0);
+
+    // Configure sensors for better mobile interaction (allow scrolling, prevent accidental drags)
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        })
+    );
 
     // Multi-select state for bulk operations
     const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
@@ -289,7 +298,7 @@ export function GroupManagementClient({
 
             {/* Bulk Action Toolbar */}
             {activeTab === 'groups' && selectedStudentIds.length > 0 && (
-                <div className="glass-card p-4 border-l-4 border-primary-cyan">
+                <div className="glass-card p-4 border-l-4 border-primary-cyan fixed bottom-6 left-4 right-4 z-50 shadow-2xl max-w-2xl mx-auto backdrop-blur-xl animate-in slide-in-from-bottom-4 duration-300">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-lg bg-primary-cyan/20 flex items-center justify-center">
@@ -349,6 +358,7 @@ export function GroupManagementClient({
             <div className="min-h-[400px]">
                 {activeTab === 'groups' && (
                     <DndContext
+                        sensors={sensors}
                         collisionDetection={closestCenter}
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}

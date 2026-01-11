@@ -69,7 +69,7 @@ export const StudentCard = memo(function StudentCard({
                         w-5 h-5 rounded border flex items-center justify-center transition-all duration-200 flex-shrink-0
                         ${isSelected
                             ? 'bg-primary-cyan border-primary-cyan text-white opacity-100'
-                            : 'border-white/20 hover:border-primary-cyan/50 opacity-0 group-hover:opacity-100'
+                            : 'border-white/20 hover:border-primary-cyan/50 opacity-100'
                         }
                     `}
                     onClick={(e) => {
@@ -111,13 +111,14 @@ export const StudentCard = memo(function StudentCard({
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-1 flex-shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-1 flex-shrink-0 opacity-100 transition-opacity">
                 {!selectable && onReassign && (
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
                             onReassign();
                         }}
+                        onPointerDown={(e) => e.stopPropagation()}
                         className="p-1.5 rounded-lg bg-white/5 hover:bg-primary-cyan/20 text-[var(--text-secondary)] hover:text-primary-cyan transition-colors"
                         title="Reassign Student"
                     >
@@ -132,6 +133,7 @@ export const StudentCard = memo(function StudentCard({
                             e.stopPropagation();
                             onDelete();
                         }}
+                        onPointerDown={(e) => e.stopPropagation()}
                         className="p-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-[var(--text-secondary)] hover:text-red-400 transition-colors"
                         title="Delete Student"
                     >

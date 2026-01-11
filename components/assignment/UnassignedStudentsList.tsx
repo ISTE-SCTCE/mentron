@@ -16,12 +16,14 @@ interface UnassignedStudentsListProps {
     onStudentsSelect: (studentIds: string[]) => void;
     selectedStudentIds: string[];
     userDepartment?: string;
+    onAssignSingle?: (studentId: string) => void;
 }
 
 export function UnassignedStudentsList({
     onStudentsSelect,
     selectedStudentIds,
-    userDepartment
+    userDepartment,
+    onAssignSingle
 }: UnassignedStudentsListProps) {
     const [students, setStudents] = useState<Student[]>([]);
     const [loading, setLoading] = useState(true);
@@ -88,8 +90,8 @@ export function UnassignedStudentsList({
                         <button
                             onClick={() => setFilterYear(null)}
                             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${filterYear === null
-                                    ? 'bg-primary-cyan text-white'
-                                    : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
+                                ? 'bg-primary-cyan text-white'
+                                : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
                                 }`}
                         >
                             All Years
@@ -99,8 +101,8 @@ export function UnassignedStudentsList({
                                 key={year.value}
                                 onClick={() => setFilterYear(year.value)}
                                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${filterYear === year.value
-                                        ? 'bg-primary-cyan text-white'
-                                        : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
+                                    ? 'bg-primary-cyan text-white'
+                                    : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
                                     }`}
                             >
                                 {year.name}
@@ -118,8 +120,8 @@ export function UnassignedStudentsList({
                         <button
                             onClick={() => setFilterDept('')}
                             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${filterDept === ''
-                                    ? 'bg-secondary-purple text-white'
-                                    : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
+                                ? 'bg-secondary-purple text-white'
+                                : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
                                 }`}
                         >
                             All Depts
@@ -200,52 +202,73 @@ export function UnassignedStudentsList({
                     {/* List */}
                     <div className="space-y-2 max-h-80 overflow-y-auto pr-2">
                         {students.map(student => (
-                            <button
+                            <div
                                 key={student.id}
-                                onClick={() => toggleStudent(student.id)}
-                                className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all ${selectedStudentIds.includes(student.id)
-                                        ? 'bg-primary-cyan/20 ring-1 ring-primary-cyan'
-                                        : 'bg-white/5 hover:bg-white/10'
+                                className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${selectedStudentIds.includes(student.id)
+                                    ? 'bg-primary-cyan/20 ring-1 ring-primary-cyan'
+                                    : 'bg-white/5 hover:bg-white/10'
                                     }`}
                             >
-                                {/* Checkbox */}
-                                <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${selectedStudentIds.includes(student.id)
+                                {/* Selection Click Area */}
+                                <div
+                                    className="flex items-center gap-3 flex-1 min-w-0 cursor-pointer"
+                                    onClick={() => toggleStudent(student.id)}
+                                >
+                                    {/* Checkbox */}
+                                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${selectedStudentIds.includes(student.id)
                                         ? 'bg-primary-cyan border-primary-cyan'
                                         : 'border-[var(--glass-border)]'
-                                    }`}>
-                                    {selectedStudentIds.includes(student.id) && (
-                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                        }`}>
+                                        {selectedStudentIds.includes(student.id) && (
+                                            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        )}
+                                    </div>
+
+                                    {/* Student info */}
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-[var(--text-primary)] truncate">
+                                            {student.name || student.email.split('@')[0]}
+                                        </p>
+                                        <p className="text-xs text-[var(--text-secondary)] truncate">
+                                            {student.email}
+                                        </p>
+                                    </div>
+
+                                    {/* Department badge - Hide on very small screens if needed */}
+                                    <div
+                                        className="hidden sm:block px-2 py-1 rounded text-xs font-medium"
+                                        style={{
+                                            backgroundColor: `${getDepartmentColor(student.department)}20`,
+                                            color: getDepartmentColor(student.department)
+                                        }}
+                                    >
+                                        {student.department}
+                                    </div>
+
+                                    {/* Year - Hide on very small screens */}
+                                    <div className="hidden sm:block text-xs text-[var(--text-secondary)] px-2 py-1 bg-white/10 rounded">
+                                        Year {student.year}
+                                    </div>
+                                </div>
+
+                                {/* Individual Assign Button */}
+                                {onAssignSingle && (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onAssignSingle(student.id);
+                                        }}
+                                        className="p-2 rounded-lg bg-primary-cyan/10 hover:bg-primary-cyan text-primary-cyan hover:text-white transition-colors"
+                                        title="Assign to Group"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                                         </svg>
-                                    )}
-                                </div>
-
-                                {/* Student info */}
-                                <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-[var(--text-primary)] truncate">
-                                        {student.name || student.email.split('@')[0]}
-                                    </p>
-                                    <p className="text-xs text-[var(--text-secondary)] truncate">
-                                        {student.email}
-                                    </p>
-                                </div>
-
-                                {/* Department badge */}
-                                <div
-                                    className="px-2 py-1 rounded text-xs font-medium"
-                                    style={{
-                                        backgroundColor: `${getDepartmentColor(student.department)}20`,
-                                        color: getDepartmentColor(student.department)
-                                    }}
-                                >
-                                    {student.department}
-                                </div>
-
-                                {/* Year */}
-                                <div className="text-xs text-[var(--text-secondary)] px-2 py-1 bg-white/10 rounded">
-                                    Year {student.year}
-                                </div>
-                            </button>
+                                    </button>
+                                )}
+                            </div>
                         ))}
                     </div>
                 </>
