@@ -256,8 +256,8 @@ a {
     justify-content: center;
     position: relative;
     padding: var(--section-padding) var(--container-padding);
-    padding-top: calc(var(--section-padding) + 140px);
-    /* 100px navbar + 40px ticker */
+    padding-top: calc(var(--section-padding) + 100px);
+    /* 100px navbar */
     overflow: hidden;
 }
 
@@ -534,17 +534,27 @@ a {
 }
 
 /* ==========================================
-   BRAND TICKER (Fixed below navbar)
+   BRAND TICKER (Scrolls with page)
    ========================================== */
+.brand-ticker-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.brand-ticker-link:hover {
+    opacity: 0.9;
+}
+
 .brand-ticker {
-    position: fixed;
-    top: 100px;
-    left: 0;
+    position: relative;
     width: 100%;
     overflow: hidden;
     background: var(--accent);
     padding: 0.5rem 0;
-    z-index: 999;
+    border-top: 2px solid var(--border);
     border-bottom: 2px solid var(--border);
 }
 
@@ -1309,7 +1319,6 @@ a {
     }
 
     .brand-ticker {
-        top: 80px;
         padding: 0.35rem 0;
     }
 
@@ -1323,7 +1332,7 @@ a {
     }
 
     .hero {
-        padding-top: calc(var(--section-padding) + 110px);
+        padding-top: calc(var(--section-padding) + 80px);
     }
 }
 
