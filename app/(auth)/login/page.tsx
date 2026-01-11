@@ -13,31 +13,49 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     // const [error, setError] = useState(''); // Removed local error state
     const [loading, setLoading] = useState(false);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
     const router = useRouter();
     const supabase = createClient();
     const { showToast } = useToast();
 
     // Redirect if already logged in (Fixes Back button showing Login page)
     useEffect(() => {
+        let isMounted = true;
+
         const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                // Determine role and redirect (simplified check for speed)
-                router.replace('/');
+            // Don't check session if user is actively trying to log in
+            if (isLoggingIn) return;
+
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user && isMounted && !isLoggingIn) {
+                    // Determine role and redirect (simplified check for speed)
+                    router.replace('/');
+                }
+            } catch (error) {
+                // Silently fail - user can still attempt login
+                console.error('Session check failed:', error);
             }
         };
+
         checkSession();
-    }, [router, supabase]);
+
+        return () => {
+            isMounted = false;
+        };
+    }, [router, supabase, isLoggingIn]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         // setError('');
         setLoading(true);
+        setIsLoggingIn(true);
 
         // Validate Gmail only
         if (!email.endsWith('@gmail.com')) {
             showToast('Only Gmail accounts are allowed');
             setLoading(false);
+            setIsLoggingIn(false);
             return;
         }
 
@@ -62,6 +80,7 @@ export default function LoginPage() {
                         await supabase.auth.signOut();
                         showToast('Your account has been deactivated. Please contact the chairman.');
                         setLoading(false);
+                        setIsLoggingIn(false);
                         return;
                     }
 
@@ -84,12 +103,14 @@ export default function LoginPage() {
                         await supabase.auth.signOut();
                         showToast('User profile not found. Please contact support.');
                         setLoading(false);
+                        setIsLoggingIn(false);
                     }
                 }
             }
         } catch (err: any) {
             showToast(err.message || 'Failed to sign in');
             setLoading(false);
+            setIsLoggingIn(false);
         }
     };
 
