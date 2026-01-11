@@ -554,7 +554,7 @@ a {
     width: 100%;
     overflow: hidden;
     background: var(--accent);
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
     border-top: 2px solid var(--border);
     border-bottom: 2px solid var(--border);
 }
@@ -570,6 +570,7 @@ a {
     font-family: var(--font-display);
     font-size: 1.5rem;
     font-weight: 400;
+    line-height: 1.2;
     letter-spacing: 0.1em;
     color: var(--text-light);
     padding: 0 1.5rem;
@@ -1320,11 +1321,11 @@ a {
     }
 
     .brand-ticker-link {
-        margin-top: 80px;
+        margin-top: 100px;
     }
 
     .brand-ticker {
-        padding: 0.35rem 0;
+        padding: 0.6rem 0;
     }
 
     .brand-ticker-item {
