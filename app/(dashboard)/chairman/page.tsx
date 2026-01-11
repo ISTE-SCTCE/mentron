@@ -7,8 +7,6 @@ import { DashboardLayout } from '@/components/DashboardLayout';
 import { CalendarWidget } from '@/components/CalendarWidget';
 import { AddAdminButton } from '@/components/AddAdminButton';
 
-export const dynamic = 'force-dynamic';
-
 export default async function ChairmanDashboard() {
     const supabase = await createClient();
 

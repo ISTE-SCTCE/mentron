@@ -3,8 +3,6 @@ import { redirect } from 'next/navigation';
 import { DashboardHeader } from '@/components/DashboardHeader';
 import { DashboardLayout } from '@/components/DashboardLayout';
 
-export const dynamic = 'force-dynamic';
-
 export default async function ExecomMaterialsPage() {
     const supabase = await createClient();
 

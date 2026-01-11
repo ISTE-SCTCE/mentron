@@ -8,8 +8,6 @@ import { AnalyticsWidget } from '@/components/ui/AnalyticsWidget';
 
 import { getLast7DaysCounts } from '@/lib/utils/analytics';
 
-export const dynamic = 'force-dynamic';
-
 export default async function ExecomDashboard() {
     const supabase = await createClient();
 

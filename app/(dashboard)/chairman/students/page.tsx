@@ -6,8 +6,6 @@ import { DashboardLayout } from '@/components/DashboardLayout';
 import { GroupManagementClient } from '@/components/GroupManagementClient';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 
-export const dynamic = 'force-dynamic';
-
 export default async function ChairmanStudentsPage() {
     const supabase = await createClient();
 

@@ -101,6 +101,12 @@ export function StudentSearchDropdown({
     }, []);
 
     // Keyboard navigation
+    const handleSelect = useCallback((student: Student) => {
+        onSelectStudent?.(student);
+        setSearchQuery(student.name || student.email);
+        setIsOpen(false);
+    }, [onSelectStudent]);
+
     const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (!isOpen) return;
 
@@ -127,13 +133,7 @@ export function StudentSearchDropdown({
                 inputRef.current?.blur();
                 break;
         }
-    }, [isOpen, highlightedIndex, results]);
-
-    const handleSelect = (student: Student) => {
-        onSelectStudent?.(student);
-        setSearchQuery(student.name || student.email);
-        setIsOpen(false);
-    };
+    }, [isOpen, highlightedIndex, results, handleSelect]);
 
     const handleClear = () => {
         setSearchQuery('');
@@ -150,6 +150,7 @@ export function StudentSearchDropdown({
             role="combobox"
             aria-expanded={isOpen}
             aria-haspopup="listbox"
+            aria-controls="student-search-results"
         >
             {/* Search Input */}
             <div className="relative">
@@ -223,7 +224,7 @@ export function StudentSearchDropdown({
                     {!error && results.length > 0 && (
                         <div className="p-1">
                             <div className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider px-3 py-2">
-                                Students starting with "{searchQuery}"
+                                Students starting with &quot;{searchQuery}&quot;
                             </div>
                             {results.map((student, index) => (
                                 <button
@@ -233,8 +234,8 @@ export function StudentSearchDropdown({
                                     onClick={() => handleSelect(student)}
                                     onMouseEnter={() => setHighlightedIndex(index)}
                                     className={`w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 transition-colors ${highlightedIndex === index
-                                            ? 'bg-primary-cyan/20'
-                                            : 'hover:bg-white/5'
+                                        ? 'bg-primary-cyan/20'
+                                        : 'hover:bg-white/5'
                                         }`}
                                 >
                                     {/* Avatar */}
@@ -262,7 +263,7 @@ export function StudentSearchDropdown({
                             <svg className="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            No students found starting with "{searchQuery}"
+                            No students found starting with &quot;{searchQuery}&quot;
                         </div>
                     )}
                 </div>

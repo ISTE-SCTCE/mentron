@@ -1,4 +1,5 @@
 import RetroErrorCard from '@/components/ui/RetroErrorCard';
+import Link from 'next/link';
 
 export default function NotFound() {
     return (
@@ -8,12 +9,12 @@ export default function NotFound() {
                 <p className="text-[var(--text-secondary)] mb-4">
                     The page you&apos;re looking for doesn&apos;t exist or has been moved.
                 </p>
-                <a
+                <Link
                     href="/"
                     className="inline-block px-6 py-3 bg-gradient-to-r from-primary-cyan to-secondary-purple text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
                 >
                     Go Home
-                </a>
+                </Link>
             </div>
         </div>
     );

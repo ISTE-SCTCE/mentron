@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, getDay } from 'date-fns';
 
 interface CalendarEvent {
@@ -29,11 +29,7 @@ export function CalendarWidget({ userRole, onEventClick }: CalendarWidgetProps) 
     const canCreateEvents = userRole === 'execom' || userRole === 'chairman';
 
     // Fetch events for current month
-    useEffect(() => {
-        fetchEvents();
-    }, [currentDate]);
-
-    const fetchEvents = async () => {
+    const fetchEvents = useCallback(async () => {
         try {
             const month = format(currentDate, 'yyyy-MM');
             const response = await fetch(`/api/calendar/events?month=${month}`);
@@ -42,7 +38,11 @@ export function CalendarWidget({ userRole, onEventClick }: CalendarWidgetProps) 
         } catch (error) {
             console.error('Failed to fetch events:', error);
         }
-    };
+    }, [currentDate]);
+
+    useEffect(() => {
+        fetchEvents();
+    }, [fetchEvents]);
 
     const monthStart = startOfMonth(currentDate);
     const monthEnd = endOfMonth(currentDate);

@@ -56,6 +56,13 @@ export function StorySection({
     // Image scale transform
     const imageScale = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [1.2, 1, 1.2]);
 
+    // Element opacity/transforms
+    const glowOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.6, 0.6, 0]);
+    const subtitleOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+    const titleOpacity = useTransform(scrollYProgress, [0.15, 0.35], [0, 1]);
+    const titleY = useTransform(scrollYProgress, [0.15, 0.35], [50, 0]);
+    const descOpacity = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
+
     return (
         <section
             id={id}
@@ -70,7 +77,7 @@ export function StorySection({
                 className="section-glow"
                 style={{
                     background: `radial-gradient(circle at 50% 50%, ${glowColor}15 0%, transparent 70%)`,
-                    opacity: useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.6, 0.6, 0])
+                    opacity: glowOpacity
                 }}
             />
 
@@ -87,22 +94,22 @@ export function StorySection({
                     >
                         <motion.h3
                             className="section-subtitle text-sm uppercase tracking-widest text-text-secondary mb-4"
-                            style={{ opacity: useTransform(scrollYProgress, [0.1, 0.3], [0, 1]) }}
+                            style={{ opacity: subtitleOpacity }}
                         >
                             {subtitle}
                         </motion.h3>
                         <motion.h2
                             className="section-title mb-6"
                             style={{
-                                opacity: useTransform(scrollYProgress, [0.15, 0.35], [0, 1]),
-                                y: useTransform(scrollYProgress, [0.15, 0.35], [50, 0])
+                                opacity: titleOpacity,
+                                y: titleY
                             }}
                         >
                             {title}
                         </motion.h2>
                         <motion.p
                             className="text-lg md:text-xl text-text-secondary leading-relaxed mb-8"
-                            style={{ opacity: useTransform(scrollYProgress, [0.2, 0.4], [0, 1]) }}
+                            style={{ opacity: descOpacity }}
                         >
                             {description}
                         </motion.p>

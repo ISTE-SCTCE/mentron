@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 
 interface Notification {
@@ -26,7 +26,7 @@ export function NotificationsPanel({ userRole }: NotificationsPanelProps) {
 
     const canAnnounce = userRole === 'execom' || userRole === 'chairman';
 
-    const fetchNotifications = async () => {
+    const fetchNotifications = useCallback(async () => {
         try {
             const response = await fetch('/api/notifications');
             const data = await response.json();
@@ -35,14 +35,14 @@ export function NotificationsPanel({ userRole }: NotificationsPanelProps) {
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchNotifications();
         // Poll for new notifications every 30 seconds
         const interval = setInterval(fetchNotifications, 30000);
         return () => clearInterval(interval);
-    }, []);
+    }, [fetchNotifications]);
 
     const markAsRead = async (id: string) => {
         try {
