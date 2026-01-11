@@ -38,6 +38,6 @@ export default async function RootPage() {
     }
 
     // If no user or auth check fails, redirect to landing page
-    redirect('/landing/index.html');
+    redirect('/landing');
 }
 
