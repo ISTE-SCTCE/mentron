@@ -41,8 +41,8 @@ export async function PATCH(request: Request, { params }: RouteParams) {
             return NextResponse.json({ error: 'Group not found' }, { status: 404 });
         }
 
-        // Only group creator or chairman can update
-        if (group.created_by !== user.id && admin.role !== 'chairman') {
+        // Only group creator or chairman/execom can update
+        if (group.created_by !== user.id && admin.role !== 'chairman' && admin.role !== 'execom') {
             return NextResponse.json(
                 { error: 'You can only update groups you created' },
                 { status: 403 }
@@ -112,8 +112,8 @@ export async function DELETE(request: Request, { params }: RouteParams) {
             );
         }
 
-        // Only group creator or chairman can delete
-        if (group.created_by !== user.id && admin.role !== 'chairman') {
+        // Only group creator or chairman/execom can delete
+        if (group.created_by !== user.id && admin.role !== 'chairman' && admin.role !== 'execom') {
             return NextResponse.json(
                 { error: 'You can only delete groups you created' },
                 { status: 403 }

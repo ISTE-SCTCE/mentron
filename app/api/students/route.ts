@@ -31,10 +31,10 @@ export async function GET() {
             `)
             .order('created_at', { ascending: false });
 
-        // Execom can only see students in their department
-        if (admin.role === 'execom') {
-            query = query.eq('department', admin.department);
-        }
+        // Execom can now see all students (previously filtered by department)
+        // if (admin.role === 'execom') {
+        //     query = query.eq('department', admin.department);
+        // }
 
         const { data: students, error } = await query;
 

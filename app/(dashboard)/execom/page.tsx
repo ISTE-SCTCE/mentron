@@ -5,6 +5,7 @@ import { DashboardHeader } from '@/components/DashboardHeader';
 import { StatCard } from '@/components/StatCard';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { AnalyticsWidget } from '@/components/ui/AnalyticsWidget';
+import { AddAdminButton } from '@/components/AddAdminButton';
 
 import { getLast7DaysCounts } from '@/lib/utils/analytics';
 
@@ -146,7 +147,10 @@ export default async function ExecomDashboard() {
 
                     {/* Quick Actions */}
                     <div className="glass-card mb-6 sm:mb-8">
-                        <h2 className="text-xl sm:text-2xl font-bold mb-4">Quick Actions</h2>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                            <h2 className="text-xl sm:text-2xl font-bold">Quick Actions</h2>
+                            <AddAdminButton />
+                        </div>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                             <Link href="/execom/upload" className="btn btn-primary text-sm justify-center touch-manipulation">
                                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

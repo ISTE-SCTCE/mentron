@@ -18,8 +18,8 @@ export async function POST(request: Request) {
             .eq('id', user.id)
             .single();
 
-        if (!admin || admin.role !== 'chairman') {
-            return NextResponse.json({ error: 'Forbidden - Chairman access required' }, { status: 403 });
+        if (!admin || (admin.role !== 'chairman' && admin.role !== 'execom')) {
+            return NextResponse.json({ error: 'Forbidden - Chairman or Execom access required' }, { status: 403 });
         }
 
         // Parse request body
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
                 department,
                 role,
                 is_active: true,
-                can_view_analytics: role === 'chairman',
+                can_view_analytics: role === 'chairman' || role === 'execom',
             })
             .select()
             .single();

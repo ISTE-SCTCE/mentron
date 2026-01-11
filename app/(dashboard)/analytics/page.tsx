@@ -4,7 +4,7 @@ import { DashboardHeader } from '@/components/DashboardHeader';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { AnalyticsWidget } from '@/components/ui/AnalyticsWidget';
 
-export default async function ChairmanAnalyticsPage() {
+export default async function AnalyticsPage() {
     const supabase = await createClient();
 
     const { data: { user } } = await supabase.auth.getUser();
@@ -19,9 +19,11 @@ export default async function ChairmanAnalyticsPage() {
         .eq('id', user.id)
         .single();
 
-    if (!admin || admin.role !== 'chairman') {
+    if (!admin || (admin.role !== 'chairman' && admin.role !== 'execom')) {
         redirect('/login');
     }
+
+    const userRole = admin.role as 'chairman' | 'execom';
 
     // Parallel fetching for optimized loading
     const [totalStudentsResult, studentsResult, totalMaterialsResult, recentMaterialsResult, materialsResult] = await Promise.all([
@@ -95,13 +97,13 @@ export default async function ChairmanAnalyticsPage() {
     };
 
     return (
-        <DashboardLayout userRole="chairman">
+        <DashboardLayout userRole={userRole}>
             <main className="relative min-h-screen p-6 sm:p-8 lg:p-10">
                 <div className="max-w-7xl mx-auto">
                     <DashboardHeader
                         userName={userName}
                         subtitle="System Analytics & Insights"
-                        userRole="chairman"
+                        userRole={userRole}
                         onSignOut={handleSignOut}
                     />
 
@@ -137,7 +139,7 @@ export default async function ChairmanAnalyticsPage() {
                         <AnalyticsWidget
                             title="Performance Analytics"
                             viewCount={totalViews}
-                            viewGrowth="Live Data" // Changed from fake +X%
+                            viewGrowth="Live Data"
                             secondaryMetricLabel="Avg. Views/Material"
                             secondaryMetricValue={totalMaterials ? Math.round(totalViews / totalMaterials) : 0}
                             secondaryMetricGrowth="Real-time"
