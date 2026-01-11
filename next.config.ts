@@ -39,6 +39,9 @@ const nextConfig: any = {
   // Optimize production builds
   productionBrowserSourceMaps: false,
 
+  // Force dynamic rendering for all pages (prevents build-time pre-rendering)
+  output: 'standalone',
+
   // Ignore typescript errors during build
   typescript: {
     ignoreBuildErrors: true,
