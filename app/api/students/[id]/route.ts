@@ -89,7 +89,7 @@ export async function DELETE(
     }
 }
 
-// GET - Get a specific student's details
+// GET - Get a specific student's details with comprehensive information
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
@@ -114,6 +114,7 @@ export async function GET(
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
         }
 
+        // Fetch student with group information
         const { data: student, error } = await supabase
             .from('group_members')
             .select(`
@@ -127,7 +128,28 @@ export async function GET(
             return NextResponse.json({ error: 'Student not found' }, { status: 404 });
         }
 
-        return NextResponse.json({ student });
+        // Fetch assignment history
+        const { data: assignmentHistory } = await supabase
+            .from('student_assignments')
+            .select('*')
+            .eq('student_id', id)
+            .order('assigned_at', { ascending: false });
+
+        // Count materials viewed (if materials table has student tracking)
+        // For now, return 0 as placeholder - can be enhanced when material tracking is implemented
+        const materialsViewedCount = 0;
+
+        // Get last activity from assignment history
+        const lastActivity = assignmentHistory && assignmentHistory.length > 0
+            ? assignmentHistory[0].assigned_at
+            : null;
+
+        return NextResponse.json({
+            student,
+            assignmentHistory: assignmentHistory || [],
+            materialsViewedCount,
+            lastActivity
+        });
 
     } catch (error: any) {
         console.error('Error fetching student:', error);

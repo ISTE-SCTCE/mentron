@@ -1,7 +1,8 @@
 'use client';
 
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useDraggable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 
 interface Student {
     id: string;
@@ -20,42 +21,32 @@ interface Student {
 interface StudentCardProps {
     student: Student;
     isDragging?: boolean;
+    onDelete?: () => void;
+    onReassign?: () => void;
+    selectable?: boolean;
+    isSelected?: boolean;
+    onToggleSelect?: () => void;
+    onClick?: () => void;
 }
 
-// Default gradient for students without group
-const DEFAULT_GRADIENT = 'linear-gradient(135deg, #06b6d4, #a855f7)';
-
-export const StudentCard = memo(function StudentCard({ student, isDragging, onDelete }: StudentCardProps & { onDelete?: () => void }) {
+export const StudentCard = memo(function StudentCard({
+    student,
+    isDragging,
+    onDelete,
+    onReassign,
+    selectable,
+    isSelected,
+    onToggleSelect,
+    onClick
+}: StudentCardProps) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: student.id,
         data: { student }
     });
 
-    // Memoize computed values
-    const { displayName, displaySubtitle, avatarStyle, groupColor } = useMemo(() => {
-        const name = student.name || student.email;
-        const subtitle = [
-            student.roll_number,
-            `Year ${student.year}`,
-            student.department
-        ].filter(Boolean).join(' • ');
-
-        const color = student.group?.color;
-        const avatar = color
-            ? { background: `linear-gradient(135deg, ${color}, ${color}dd)` }
-            : { background: DEFAULT_GRADIENT };
-
-        return {
-            displayName: name,
-            displaySubtitle: subtitle,
-            avatarStyle: avatar,
-            groupColor: color
-        };
-    }, [student.name, student.email, student.roll_number, student.year, student.department, student.group?.color]);
-
-    const style = transform ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-    } : undefined;
+    const style = {
+        transform: CSS.Translate.toString(transform),
+    } as React.CSSProperties;
 
     return (
         <div
@@ -63,56 +54,93 @@ export const StudentCard = memo(function StudentCard({ student, isDragging, onDe
             style={style}
             {...listeners}
             {...attributes}
-            className={`flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50 scale-95' : ''}`}
+            onClick={onClick} // Main card click opens detail view
+            className={`
+                group flex items-center gap-3 p-2 rounded-lg 
+                ${isSelected ? 'bg-primary-cyan/20 ring-1 ring-primary-cyan' : 'bg-white/5 hover:bg-white/10'} 
+                transition-all cursor-pointer
+                ${isDragging ? 'opacity-50 scale-95' : ''}
+            `}
         >
-            <div className="flex items-center gap-3 flex-1 min-w-0">
+            {/* Checkbox for selection mode - visible on hover or when selected */}
+            {selectable && (
                 <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
-                    style={avatarStyle}
+                    className={`
+                        w-5 h-5 rounded border flex items-center justify-center transition-all duration-200 flex-shrink-0
+                        ${isSelected
+                            ? 'bg-primary-cyan border-primary-cyan text-white opacity-100'
+                            : 'border-white/20 hover:border-primary-cyan/50 opacity-0 group-hover:opacity-100'
+                        }
+                    `}
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent drag/click
+                        onToggleSelect?.();
+                    }}
+                    onPointerDown={(e) => e.stopPropagation()} // Prevent drag start on checkbox
                 >
-                    {displayName[0].toUpperCase()}
+                    {isSelected && (
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                    )}
                 </div>
-                <div className="min-w-0 flex-1">
-                    <div className="font-semibold text-sm truncate">{displayName}</div>
-                    <div className="text-text-secondary text-xs truncate">
-                        {displaySubtitle}
-                    </div>
+            )}
+
+            <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                style={{
+                    background: student.group?.color
+                        ? `linear-gradient(135deg, ${student.group.color}, ${student.group.color}dd)`
+                        : 'linear-gradient(135deg, #06b6d4, #a855f7)'
+                }}
+            >
+                {(student.name || student.email)[0].toUpperCase()}
+            </div>
+
+            <div className="flex-1 min-w-0">
+                <div className="text-sm font-medium truncate text-[var(--text-primary)]">
+                    {student.name || student.email}
+                </div>
+                <div className="text-xs text-[var(--text-secondary)] truncate">
+                    {[
+                        student.roll_number,
+                        `Year ${student.year}`,
+                        student.department
+                    ].filter(Boolean).join(' • ')}
                 </div>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-                {student.group && groupColor && (
-                    <span
-                        className="px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap"
-                        style={{
-                            backgroundColor: `${groupColor}20`,
-                            color: groupColor,
-                            borderColor: `${groupColor}40`,
-                            borderWidth: '1px'
-                        }}
-                    >
-                        {student.group.name}
-                    </span>
-                )}
-                {onDelete ? (
+
+            {/* Actions */}
+            <div className="flex items-center gap-1 flex-shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                {!selectable && onReassign && (
                     <button
-                        onPointerDown={(e) => {
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onReassign();
+                        }}
+                        className="p-1.5 rounded-lg bg-white/5 hover:bg-primary-cyan/20 text-[var(--text-secondary)] hover:text-primary-cyan transition-colors"
+                        title="Reassign Student"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                    </button>
+                )}
+                {!selectable && onDelete && (
+                    <button
+                        onClick={(e) => {
                             e.stopPropagation();
                             onDelete();
                         }}
-                        className="p-1.5 rounded-lg hover:bg-red-500/20 text-text-secondary hover:text-red-400 transition-colors z-10"
+                        className="p-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-[var(--text-secondary)] hover:text-red-400 transition-colors"
                         title="Delete Student"
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                     </button>
-                ) : (
-                    <svg className="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
                 )}
             </div>
         </div>
     );
 });
-

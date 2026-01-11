@@ -8,8 +8,11 @@ import { GroupCard } from '@/components/GroupCard';
 import { StudentCard } from '@/components/StudentCard';
 import { StudentReassignmentModal } from '@/components/StudentReassignmentModal';
 import { DeleteStudentModal } from '@/components/DeleteStudentModal';
+import { StudentDetailModal } from '@/components/StudentDetailModal';
+import { BulkReassignmentModal } from '@/components/assignment/BulkReassignmentModal';
 import { AssignmentsClient } from '@/components/assignment';
 import { HierarchicalView } from '@/components/hierarchy/HierarchicalView';
+import { useToast } from '@/lib/context/ToastContext';
 
 
 interface Student {
@@ -76,6 +79,14 @@ export function GroupManagementClient({
     const [hierarchyStats, setHierarchyStats] = useState<HierarchyStats | null>(null);
     const [refreshKey, setRefreshKey] = useState(0);
 
+    // Multi-select state for bulk operations
+    const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
+    const [showBulkAssignModal, setShowBulkAssignModal] = useState(false);
+
+    // Student detail modal state
+    const [detailStudentId, setDetailStudentId] = useState<string | null>(null);
+    const [showDetailModal, setShowDetailModal] = useState(false);
+
     // Update URL when tab changes
     const handleTabChange = useCallback((tab: TabType) => {
         setActiveTab(tab);
@@ -132,6 +143,50 @@ export function GroupManagementClient({
 
     const handleReassignClick = (student: Student) => {
         setReassignStudent(student);
+    };
+
+    const handleStudentClick = (student: Student) => {
+        setDetailStudentId(student.id);
+        setShowDetailModal(true);
+    };
+
+    const toggleStudentSelection = (studentId: string) => {
+        setSelectedStudentIds(prev =>
+            prev.includes(studentId)
+                ? prev.filter(id => id !== studentId)
+                : [...prev, studentId]
+        );
+    };
+
+    const handleSelectAllInGroup = (groupId: string) => {
+        const groupStudents = studentsByGroup[groupId] || [];
+        const groupStudentIds = groupStudents.map(s => s.id);
+        const allSelected = groupStudentIds.every(id => selectedStudentIds.includes(id));
+
+        if (allSelected) {
+            // Deselect all from this group
+            setSelectedStudentIds(prev => prev.filter(id => !groupStudentIds.includes(id)));
+        } else {
+            // Select all from this group
+            setSelectedStudentIds(prev => {
+                const newIds = groupStudentIds.filter(id => !prev.includes(id));
+                return [...prev, ...newIds];
+            });
+        }
+    };
+
+    const handleBulkAssignComplete = () => {
+        setSelectedStudentIds([]);
+        setShowBulkAssignModal(false);
+        refreshData();
+    };
+
+    const handleDetailAction = (action: 'reassign' | 'delete', student: Student) => {
+        if (action === 'reassign') {
+            setReassignStudent(student);
+        } else {
+            setDeleteStudent(student);
+        }
     };
 
     const refreshData = useCallback(async () => {
@@ -232,6 +287,44 @@ export function GroupManagementClient({
                 ))}
             </div>
 
+            {/* Bulk Action Toolbar */}
+            {activeTab === 'groups' && selectedStudentIds.length > 0 && (
+                <div className="glass-card p-4 border-l-4 border-primary-cyan">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-primary-cyan/20 flex items-center justify-center">
+                                <svg className="w-5 h-5 text-primary-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p className="font-semibold text-[var(--text-primary)]">
+                                    {selectedStudentIds.length} Student{selectedStudentIds.length > 1 ? 's' : ''} Selected
+                                </p>
+                                <p className="text-sm text-text-secondary">Choose an action below</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 w-full sm:w-auto">
+                            <button
+                                onClick={() => setShowBulkAssignModal(true)}
+                                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-primary-cyan hover:bg-primary-cyan/80 text-white rounded-lg font-medium transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                Assign to Group
+                            </button>
+                            <button
+                                onClick={() => setSelectedStudentIds([])}
+                                className="px-4 py-2 bg-white/5 hover:bg-white/10 text-text-secondary hover:text-text-primary rounded-lg font-medium transition-colors"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Stats Bar for Hierarchy */}
             {activeTab === 'hierarchy' && hierarchyStats && (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -276,6 +369,11 @@ export function GroupManagementClient({
                                 students={studentsByGroup['unassigned'] || []}
                                 onReassignStudent={handleReassignClick}
                                 onDeleteStudent={setDeleteStudent}
+                                selectable={true}
+                                selectedStudentIds={selectedStudentIds}
+                                onToggleSelect={toggleStudentSelection}
+                                onSelectAll={handleSelectAllInGroup}
+                                onStudentClick={handleStudentClick}
                             />
 
                             {/* Group Cards */}
@@ -287,6 +385,11 @@ export function GroupManagementClient({
                                     onDelete={() => handleDeleteGroup(group.id)}
                                     onReassignStudent={handleReassignClick}
                                     onDeleteStudent={setDeleteStudent}
+                                    selectable={true}
+                                    selectedStudentIds={selectedStudentIds}
+                                    onToggleSelect={toggleStudentSelection}
+                                    onSelectAll={handleSelectAllInGroup}
+                                    onStudentClick={handleStudentClick}
                                 />
                             ))}
                         </div>
@@ -347,6 +450,24 @@ export function GroupManagementClient({
                 onClose={() => setDeleteStudent(null)}
                 onSuccess={refreshData}
                 student={deleteStudent}
+            />
+
+            {/* Student Detail Modal */}
+            <StudentDetailModal
+                isOpen={showDetailModal}
+                onClose={() => setShowDetailModal(false)}
+                studentId={detailStudentId}
+                onReassign={(student) => handleDetailAction('reassign', student)}
+                onDelete={(student) => handleDetailAction('delete', student)}
+                userRole={userRole}
+            />
+
+            {/* Bulk Reassignment Modal */}
+            <BulkReassignmentModal
+                isOpen={showBulkAssignModal}
+                onClose={() => setShowBulkAssignModal(false)}
+                selectedStudentIds={selectedStudentIds}
+                onReassignmentComplete={handleBulkAssignComplete}
             />
         </div>
     );

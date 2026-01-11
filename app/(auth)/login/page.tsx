@@ -18,32 +18,9 @@ export default function LoginPage() {
     const supabase = createClient();
     const { showToast } = useToast();
 
-    // Redirect if already logged in (Fixes Back button showing Login page)
-    useEffect(() => {
-        let isMounted = true;
-
-        const checkSession = async () => {
-            // Don't check session if user is actively trying to log in
-            if (isLoggingIn) return;
-
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session?.user && isMounted && !isLoggingIn) {
-                    // Determine role and redirect (simplified check for speed)
-                    router.replace('/');
-                }
-            } catch (error) {
-                // Silently fail - user can still attempt login
-                console.error('Session check failed:', error);
-            }
-        };
-
-        checkSession();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [router, supabase, isLoggingIn]);
+    // Redirect logic removed to prevent mobile infinite loops
+    // If a user is redirected here from a protected route, we shouldn't auto-redirect them back.
+    // The "Back to Dashboard" link allows manual navigation if they are already logged in.
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();

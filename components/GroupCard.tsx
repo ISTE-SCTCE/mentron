@@ -2,6 +2,7 @@
 
 import { useState, memo, useMemo, useCallback } from 'react';
 import { useDroppable } from '@dnd-kit/core';
+import { StudentCard } from './StudentCard';
 
 interface Group {
     id: string;
@@ -31,9 +32,26 @@ interface GroupCardProps {
     onDeleteStudent?: (student: Student) => void;
     onReassignStudent?: (student: Student) => void;
     isOver?: boolean;
+    selectable?: boolean;
+    selectedStudentIds?: string[];
+    onToggleSelect?: (studentId: string) => void;
+    onSelectAll?: (groupId: string) => void;
+    onStudentClick?: (student: Student) => void;
 }
 
-export const GroupCard = memo(function GroupCard({ group, students, onDelete, onDeleteStudent, onReassignStudent, isOver }: GroupCardProps) {
+export const GroupCard = memo(function GroupCard({
+    group,
+    students,
+    onDelete,
+    onDeleteStudent,
+    onReassignStudent,
+    isOver,
+    selectable,
+    selectedStudentIds,
+    onToggleSelect,
+    onSelectAll,
+    onStudentClick
+}: GroupCardProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const { setNodeRef } = useDroppable({
         id: group.id,
@@ -45,6 +63,12 @@ export const GroupCard = memo(function GroupCard({ group, students, onDelete, on
         students.filter(s => s.group_id === group.id || (group.id === 'unassigned' && !s.group_id)),
         [students, group.id]
     );
+
+    // Calculate selection state
+    const allSelected = useMemo(() => {
+        if (!selectedStudentIds || groupStudents.length === 0) return false;
+        return groupStudents.every(s => selectedStudentIds.includes(s.id));
+    }, [selectedStudentIds, groupStudents]);
 
     // Memoize toggle handler
     const toggleExpanded = useCallback(() => setIsExpanded(prev => !prev), []);
@@ -93,6 +117,24 @@ export const GroupCard = memo(function GroupCard({ group, students, onDelete, on
                     </div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
+                    {/* Select All Button - Only visible when expanded and has students */}
+                    {selectable && isExpanded && groupStudents.length > 0 && onSelectAll && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onSelectAll(group.id);
+                            }}
+                            className={`p-1.5 rounded-lg transition-colors ${allSelected
+                                ? 'bg-primary-cyan text-white hover:bg-primary-cyan/80'
+                                : 'bg-white/5 text-text-secondary hover:bg-white/10 hover:text-primary-cyan'}`}
+                            title={allSelected ? "Deselect All" : "Select All"}
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </button>
+                    )}
+
                     <span
                         className="px-3 py-1 rounded-full text-sm font-semibold"
                         style={{
@@ -135,61 +177,16 @@ export const GroupCard = memo(function GroupCard({ group, students, onDelete, on
                 <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
                     {groupStudents.length > 0 ? (
                         groupStudents.map(student => (
-                            <div
+                            <StudentCard
                                 key={student.id}
-                                className="group flex items-center gap-3 p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-                            >
-                                <div
-                                    className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                                    style={{
-                                        background: `linear-gradient(135deg, ${group.color}, ${group.color}dd)`
-                                    }}
-                                >
-                                    {(student.name || student.email)[0].toUpperCase()}
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="text-sm font-medium truncate">{student.name || student.email}</div>
-                                    <div className="text-xs text-text-secondary truncate">
-                                        {[
-                                            student.roll_number,
-                                            `Year ${student.year}`,
-                                            student.department
-                                        ].filter(Boolean).join(' • ')}
-                                    </div>
-                                </div>
-
-                                {/* Student Actions - visible on mobile, hover on desktop */}
-                                <div className="flex items-center gap-1 flex-shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                                    {onReassignStudent && (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onReassignStudent(student);
-                                            }}
-                                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-text-secondary hover:text-primary-cyan transition-all"
-                                            title="Reassign Student"
-                                        >
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                                            </svg>
-                                        </button>
-                                    )}
-                                    {onDeleteStudent && (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onDeleteStudent(student);
-                                            }}
-                                            className="p-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-text-secondary hover:text-red-400 transition-all"
-                                            title="Delete Student"
-                                        >
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
+                                student={student}
+                                onReassign={() => onReassignStudent?.(student)}
+                                onDelete={() => onDeleteStudent?.(student)}
+                                selectable={selectable}
+                                isSelected={selectedStudentIds?.includes(student.id)}
+                                onToggleSelect={() => onToggleSelect?.(student.id)}
+                                onClick={() => onStudentClick?.(student)}
+                            />
                         ))
                     ) : (
                         <div className="text-center py-4 text-text-secondary text-sm">
