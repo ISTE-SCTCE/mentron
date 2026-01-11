@@ -37,22 +37,7 @@ export default async function RootPage() {
         // Fallback to landing page
     }
 
-    return (
-        <iframe
-            src="/landing/index.html"
-            style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                border: 'none',
-                margin: 0,
-                padding: 0,
-                overflow: 'hidden'
-            }}
-            title="MENTRON Landing Page"
-        />
-    );
+    // If no user or auth check fails, redirect to landing page
+    redirect('/landing/index.html');
 }
 
