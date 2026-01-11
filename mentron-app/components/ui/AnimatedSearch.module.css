@@ -1,0 +1,251 @@
+/* From Uiverse.io by Lakshay-art - Adapted for Next.js */
+.searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 44px;
+    /* Fixed height to match input */
+}
+
+.white,
+.border,
+.darkBorderBg,
+.glow {
+    max-height: 52px;
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: -1;
+    border-radius: 12px;
+    filter: blur(3px);
+    pointer-events: none;
+}
+
+.input {
+    background-color: #010201;
+    border: none;
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+    color: white;
+    padding-inline: 44px 16px;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.input::placeholder {
+    color: #c0b9c0;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.main:focus-within>.inputMask {
+    display: none;
+}
+
+.inputMask {
+    display: none;
+    /* Disabled - was obscuring placeholder text */
+}
+
+.pinkMask {
+    pointer-events: none;
+    width: 30px;
+    height: 20px;
+    position: absolute;
+    background: #cf30aa;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    filter: blur(20px);
+    opacity: 0.5;
+    transition: all 2s;
+    z-index: 0;
+}
+
+.main:hover>.pinkMask {
+    opacity: 0;
+}
+
+.white {
+    max-height: 48px;
+    border-radius: 10px;
+    filter: blur(2px);
+}
+
+.white::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(83deg);
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    filter: brightness(1.4);
+    background-image: conic-gradient(rgba(0, 0, 0, 0) 0%,
+            #a099d8,
+            rgba(0, 0, 0, 0) 8%,
+            rgba(0, 0, 0, 0) 50%,
+            #dfa2da,
+            rgba(0, 0, 0, 0) 58%);
+    transition: all 2s;
+}
+
+.border {
+    max-height: 46px;
+    border-radius: 11px;
+    filter: blur(0.5px);
+}
+
+.border::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(70deg);
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    filter: brightness(1.3);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(#1c191c,
+            #402fb5 5%,
+            #1c191c 14%,
+            #1c191c 50%,
+            #cf30aa 60%,
+            #1c191c 64%);
+    transition: all 2s;
+}
+
+.darkBorderBg {
+    max-height: 50px;
+}
+
+.darkBorderBg::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(82deg);
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(rgba(0, 0, 0, 0),
+            #18116a,
+            rgba(0, 0, 0, 0) 10%,
+            rgba(0, 0, 0, 0) 50%,
+            #6e1b60,
+            rgba(0, 0, 0, 0) 60%);
+    transition: all 2s;
+}
+
+.searchContainer:hover>.darkBorderBg::before {
+    transform: translate(-50%, -50%) rotate(-98deg);
+}
+
+.searchContainer:hover>.glow::before {
+    transform: translate(-50%, -50%) rotate(-120deg);
+}
+
+.searchContainer:hover>.white::before {
+    transform: translate(-50%, -50%) rotate(-97deg);
+}
+
+.searchContainer:hover>.border::before {
+    transform: translate(-50%, -50%) rotate(-110deg);
+}
+
+.searchContainer:focus-within>.darkBorderBg::before {
+    transform: translate(-50%, -50%) rotate(442deg);
+    transition: all 4s;
+}
+
+.searchContainer:focus-within>.glow::before {
+    transform: translate(-50%, -50%) rotate(420deg);
+    transition: all 4s;
+}
+
+.searchContainer:focus-within>.white::before {
+    transform: translate(-50%, -50%) rotate(443deg);
+    transition: all 4s;
+}
+
+.searchContainer:focus-within>.border::before {
+    transform: translate(-50%, -50%) rotate(430deg);
+    transition: all 4s;
+}
+
+.glow {
+    overflow: hidden;
+    filter: blur(30px);
+    opacity: 0.4;
+    max-height: 100px;
+}
+
+.glow::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(60deg);
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(#000,
+            #402fb5 5%,
+            #000 38%,
+            #000 50%,
+            #cf30aa 60%,
+            #000 87%);
+    transition: all 2s;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Light mode adjustments */
+:global(.light) .input,
+:global(html:not(.dark)) .input {
+    background-color: #f8f8f8;
+    color: #1a1a1a;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:global(.light) .input::placeholder,
+:global(html:not(.dark)) .input::placeholder {
+    color: #888;
+}
+
+:global(.light) .searchContainer .glow,
+:global(html:not(.dark)) .searchContainer .glow {
+    opacity: 0.2;
+}

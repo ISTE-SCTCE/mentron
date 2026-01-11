@@ -1,0 +1,66 @@
+[build]
+  publish = "."
+  command = ""
+ 
+[[redirects]]
+  from = "/"
+  to = "/HTML/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/index.html"
+  to = "/HTML/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/execom.html"
+  to = "/HTML/execom.html"
+  status = 200
+
+[[redirects]]
+  from = "/forums.html"
+  to = "/HTML/forums.html"
+  status = 200
+
+[[redirects]]
+  from = "/forum-cs.html"
+  to = "/HTML/forum-cs.html"
+  status = 200
+
+[[redirects]]
+  from = "/forum-ece.html"
+  to = "/HTML/forum-ece.html"
+  status = 200
+
+[[redirects]]
+  from = "/forum-mechanical.html"
+  to = "/HTML/forum-mechanical.html"
+  status = 200
+
+[[redirects]]
+  from = "/forum-swas.html"
+  to = "/HTML/forum-swas.html"
+  status = 200
+
+[[redirects]]
+  from = "/join.html"
+  to = "/HTML/join.html"
+  status = 200
+
+[[redirects]]
+  from = "/iste.html"
+  to = "/HTML/iste.html"
+  status = 200
+
+[[redirects]]
+  from = "/registration.html"
+  to = "/HTML/registration.html"
+  status = 200
+
+[[redirects]]
+  from = "/workshop.html"
+  to = "/HTML/workshop.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "18"

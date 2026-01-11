@@ -1,0 +1,330 @@
+<!-- Deployed at 2026-01-11 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>MENTRON | Student-Driven Mentorship</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="MENTRON - Student-Driven Academic Mentorship Platform. Empowering students with guidance, resources, and community.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/landing/CSS/brutalist.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-text">MENTRON</div>
+        <div class="preloader-line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-logo">
+            <img src="/landing/mentron-logo.png" alt="MENTRON" class="nav-logo-img">
+        </a>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">HOME</a>
+            <a href="#about" class="nav-link">ABOUT</a>
+            <a href="#features" class="nav-link">FEATURES</a>
+            <a href="#resources" class="nav-link">RESOURCES</a>
+            <a href="/login" class="nav-link">LOGIN</a>
+            <a href="/register" class="nav-link btn-nav-cta">GET STARTED</a>
+        </div>
+        <div class="nav-menu-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" class="mobile-link">HOME</a>
+        <a href="#about" class="mobile-link">ABOUT</a>
+        <a href="#features" class="mobile-link">FEATURES</a>
+        <a href="#resources" class="mobile-link">RESOURCES</a>
+        <a href="/login" class="mobile-link">LOGIN</a>
+        <a href="/register" class="mobile-link">GET STARTED</a>
+    </div>
+
+    <!-- Brand Ticker -->
+    <div class="brand-ticker">
+        <div class="brand-ticker-track">
+            <span class="brand-ticker-item">ISTE</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">MENTRON</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">ISTE</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">MENTRON</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">ISTE</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">MENTRON</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">ISTE</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">MENTRON</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">ISTE</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">MENTRON</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">ISTE</span>
+            <span class="brand-ticker-dot">•</span>
+            <span class="brand-ticker-item">MENTRON</span>
+            <span class="brand-ticker-dot">•</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg-text">
+            <span>MENTRON</span>
+            <span>ACADEMIC</span>
+            <span>2025</span>
+        </div>
+        <div class="hero-content">
+            <div class="hero-tag">STUDENT INITIATIVE</div>
+            <h1 class="hero-title">
+                <span class="title-line">WHERE</span>
+                <span class="title-line">KNOWLEDGE</span>
+                <span class="title-line accent">FLOWS</span>
+            </h1>
+            <p class="hero-subtitle">Connecting juniors with seniors to transform experience into guidance and confusion
+                into clarity.</p>
+            <div class="hero-cta">
+                <a href="/register" class="btn-primary">TEACH & LEARN</a>
+                <a href="#about" class="btn-secondary">WHAT IS THIS?</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Marquee Ticker -->
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <span class="marquee-item">⚡ ACADEMIC EXCELLENCE</span>
+            <span class="marquee-item">🚀 MENTORSHIP</span>
+            <span class="marquee-item">💡 RESOURCES</span>
+            <span class="marquee-item">🎯 GUIDANCE</span>
+            <span class="marquee-item">🌟 COMMUNITY</span>
+            <span class="marquee-item">🔥 PYQs & NOTES</span>
+            <span class="marquee-item">📚 GROWTH</span>
+            <span class="marquee-item">⚡ ACADEMIC EXCELLENCE</span>
+            <span class="marquee-item">🚀 MENTORSHIP</span>
+            <span class="marquee-item">💡 RESOURCES</span>
+            <span class="marquee-item">🎯 GUIDANCE</span>
+            <span class="marquee-item">🌟 COMMUNITY</span>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-bg-text">ABOUT</div>
+        <div class="about-grid">
+            <div class="about-left">
+                <div class="section-tag">WHO WE ARE</div>
+                <h2 class="section-title">STUDENTS<br>HELPING<br>STUDENTS</h2>
+            </div>
+            <div class="about-right">
+                <p class="about-text">
+                    MENTRON is a student-led academic mentorship platform under ISTE SCTCE.
+                    We believe that no student should walk the academic path alone.
+                </p>
+                <p class="about-text">
+                    By bridging the gap between seniors and juniors, we provide curated notes,
+                    previous year questions, and personalized guidance to ensure everyone succeeds together.
+                </p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">300+</span>
+                        <span class="stat-label">STUDENTS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">RESOURCES</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">12+</span>
+                        <span class="stat-label">MENTORS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section (Was Forums) -->
+    <section class="forums-section" id="features">
+        <div class="section-header">
+            <div class="section-tag">WHAT WE OFFER</div>
+            <h2 class="section-title-large">SUPPORT</h2>
+        </div>
+
+        <div class="forums-grid">
+            <div class="forum-card">
+                <div class="forum-number">01</div>
+                <div class="forum-content">
+                    <h3 class="forum-title">ACADEMIC GUIDANCE</h3>
+                    <p class="forum-desc">Connect with seniors who have walked the path before you.</p>
+                </div>
+                <div class="forum-arrow">→</div>
+            </div>
+
+            <div class="forum-card">
+                <div class="forum-number">02</div>
+                <div class="forum-content">
+                    <h3 class="forum-title">SMART RESOURCES</h3>
+                    <p class="forum-desc">Access curated notes, PYQs, and lecture summaries.</p>
+                </div>
+                <div class="forum-arrow">→</div>
+            </div>
+
+            <div class="forum-card">
+                <div class="forum-number">03</div>
+                <div class="forum-content">
+                    <h3 class="forum-title">PEER SUPPORT</h3>
+                    <p class="forum-desc">Doubt clearing sessions and exam preparation strategies.</p>
+                </div>
+                <div class="forum-arrow">→</div>
+            </div>
+
+            <div class="forum-card">
+                <div class="forum-number">04</div>
+                <div class="forum-content">
+                    <h3 class="forum-title">SKILL GROWTH</h3>
+                    <p class="forum-desc">Interview readiness, communication skills, and confidence building.</p>
+                </div>
+                <div class="forum-arrow">→</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider Marquee -->
+    <div class="marquee-container marquee-dark">
+        <div class="marquee-track marquee-reverse">
+            <span class="marquee-item-outline">NOTES</span>
+            <span class="marquee-item-outline">•</span>
+            <span class="marquee-item-outline">QUESTION PAPERS</span>
+            <span class="marquee-item-outline">•</span>
+            <span class="marquee-item-outline">GUIDANCE</span>
+            <span class="marquee-item-outline">•</span>
+            <span class="marquee-item-outline">COMMUNITY</span>
+            <span class="marquee-item-outline">•</span>
+            <span class="marquee-item-outline">NOTES</span>
+            <span class="marquee-item-outline">•</span>
+            <span class="marquee-item-outline">QUESTION PAPERS</span>
+            <span class="marquee-item-outline">•</span>
+        </div>
+    </div>
+
+    <!-- Resources Preview (Was Events) -->
+    <section class="events-section" id="resources">
+        <div class="section-header">
+            <div class="section-tag">LIBRARY</div>
+            <h2 class="section-title-large">RESOURCES</h2>
+        </div>
+
+        <div class="events-list">
+            <a href="/login" class="event-item">
+                <div class="event-date">
+                    <span class="event-day">S1</span>
+                    <span class="event-month">SEM</span>
+                </div>
+                <div class="event-info">
+                    <h3 class="event-title">FIRST YEAR ESSENTIALS</h3>
+                    <p class="event-desc">Physics, Chemistry, Maths, and Basic Engineering notes.</p>
+                </div>
+                <div class="event-cta">
+                    <span class="btn-event">ACCESS</span>
+                </div>
+            </a>
+
+            <a href="/login" class="event-item">
+                <div class="event-date">
+                    <span class="event-day">S3</span>
+                    <span class="event-month">SEM</span>
+                </div>
+                <div class="event-info">
+                    <h3 class="event-title">CORE BRANCH SUBJECTS</h3>
+                    <p class="event-desc">Department specific resources for CSE, ECE, ME, and more.</p>
+                </div>
+                <div class="event-cta">
+                    <span class="btn-event">ACCESS</span>
+                </div>
+            </a>
+
+            <a href="/login" class="event-item">
+                <div class="event-date">
+                    <span class="event-day">PYQ</span>
+                    <span class="event-month">ARCHIVE</span>
+                </div>
+                <div class="event-info">
+                    <h3 class="event-title">PREVIOUS QUESTIONS</h3>
+                    <p class="event-desc">Solved question papers from the last 5 years.</p>
+                </div>
+                <div class="event-cta">
+                    <span class="btn-event">DOWNLOAD</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="view-all-container">
+            <a href="/login" class="btn-view-all">VISIT DASHBOARD</a>
+        </div>
+    </section>
+
+    <!-- Join Section -->
+    <section class="join-section">
+        <div class="join-bg-text">JOIN</div>
+        <div class="join-content">
+            <h2 class="join-title">START YOUR JOURNEY</h2>
+            <p class="join-desc">Whether you want to learn or lead, MENTRON is the place for you.</p>
+            <div class="join-cta">
+                <a href="/register" class="btn-primary btn-large">GET STARTED</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-tagline">POWERED BY ISTE & SWAAS</div>
+        </div>
+        <div class="footer-big-logo">
+            <img src="/landing/istelogofinal-removebg-preview.png" alt="ISTE" class="footer-logo-img">
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <span class="footer-copyright">© 2025 MENTRON. ISTE STUDENT CHAPTER SCTCE.</span>
+            <div class="footer-links">
+                <a href="#">SCTCE</a>
+                <a href="#">ISTE</a>
+                <a href="mailto:iste@sctce.ac.in">CONTACT</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/landing/JS/brutalist.js"></script>
+</body>
+
+</html>

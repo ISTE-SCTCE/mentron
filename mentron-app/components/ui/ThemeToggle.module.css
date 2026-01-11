@@ -1,0 +1,82 @@
+/* From Uiverse.io by rishichawda */
+/* The switch - the box around the slider */
+.themeToggleButton {
+    font-size: 12px;
+    position: relative;
+    display: inline-block;
+    width: 7em;
+    height: auto;
+    cursor: pointer;
+    flex-shrink: 0;
+    /* Extra safety */
+}
+
+/* Ensure SVG fills the container */
+.themeToggleButton svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Hide default HTML checkbox */
+.toggleInput {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.container,
+.patches,
+.stars,
+.button,
+.sun,
+.moon,
+.cloud {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.25s;
+}
+
+/* night sky background */
+.toggleInput:checked+svg .container {
+    fill: #2b4360;
+}
+
+/* move button to right when checked */
+.toggleInput:checked+svg .button {
+    transform: translate(28px, 2.333px);
+}
+
+/* show/hide sun and moon based on checkbox state */
+.sun {
+    opacity: 1;
+}
+
+.toggleInput:checked+svg .sun {
+    opacity: 0;
+}
+
+.moon {
+    opacity: 0;
+}
+
+.toggleInput:checked+svg .moon {
+    opacity: 1;
+}
+
+/* show or hide background items on checkbox state */
+.cloud {
+    opacity: 1;
+}
+
+.toggleInput:checked+svg .cloud {
+    opacity: 0;
+}
+
+.stars {
+    opacity: 0;
+}
+
+.toggleInput:checked+svg .stars {
+    opacity: 1;
+}
