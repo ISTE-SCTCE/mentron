@@ -54,6 +54,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
             .from('groups')
             .update({
                 ...(name && { name }),
+                ...(body.department && { department: body.department }),
                 ...(description !== undefined && { description }),
                 ...(color && { color }),
                 ...(body.year !== undefined && { year: body.year })

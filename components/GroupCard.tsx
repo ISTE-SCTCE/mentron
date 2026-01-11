@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, memo, useMemo, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import { memo, useMemo } from 'react';
 import { useDroppable } from '@dnd-kit/core';
-import { StudentCard } from './StudentCard';
 
 interface Group {
     id: string;
@@ -54,37 +54,30 @@ export const GroupCard = memo(function GroupCard({
     onStudentClick,
     onEdit
 }: GroupCardProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const router = useRouter();
     const { setNodeRef } = useDroppable({
         id: group.id,
         data: { group }
     });
 
-    // Memoize filtered students to prevent recalculation
     const groupStudents = useMemo(() =>
         students.filter(s => s.group_id === group.id || (group.id === 'unassigned' && !s.group_id)),
         [students, group.id]
     );
 
-    // Calculate selection state
-    const allSelected = useMemo(() => {
-        if (!selectedStudentIds || groupStudents.length === 0) return false;
-        return groupStudents.every(s => selectedStudentIds.includes(s.id));
-    }, [selectedStudentIds, groupStudents]);
-
-    // Memoize toggle handler
-    const toggleExpanded = useCallback(() => setIsExpanded(prev => !prev), []);
+    const handleCardClick = () => {
+        router.push(`/groups/${group.id}`);
+    };
 
     return (
         <div
             ref={setNodeRef}
-            className={`glass-card transition-all ${isOver ? 'ring-2 ring-primary-cyan scale-105' : ''
-                }`}
+            className={`glass-card transition-all ${isOver ? 'ring-2 ring-primary-cyan scale-105' : ''}`}
         >
             {/* Group Header */}
             <div
-                className="flex items-center justify-between cursor-pointer"
-                onClick={toggleExpanded}
+                className="flex items-center justify-between cursor-pointer hover:bg-white/5 p-2 rounded-lg -m-2 transition-colors"
+                onClick={handleCardClick}
             >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                     <div
@@ -107,7 +100,7 @@ export const GroupCard = memo(function GroupCard({
                         </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-lg truncate">{group.name}</h3>
+                        <h3 className="font-semibold text-lg truncate pt-1">{group.name}</h3>
                         <p className="text-text-secondary text-sm">
                             {group.department} {group.year ? `• Year ${group.year}` : '• All Years'}
                         </p>
@@ -119,24 +112,6 @@ export const GroupCard = memo(function GroupCard({
                     </div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
-                    {/* Select All Button - Only visible when expanded and has students */}
-                    {selectable && isExpanded && groupStudents.length > 0 && onSelectAll && (
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onSelectAll(group.id);
-                            }}
-                            className={`p-1.5 rounded-lg transition-colors ${allSelected
-                                ? 'bg-primary-cyan text-white hover:bg-primary-cyan/80'
-                                : 'bg-white/5 text-text-secondary hover:bg-white/10 hover:text-primary-cyan'}`}
-                            title={allSelected ? "Deselect All" : "Select All"}
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </button>
-                    )}
-
                     <span
                         className="px-3 py-1 rounded-full text-sm font-semibold"
                         style={{
@@ -146,6 +121,8 @@ export const GroupCard = memo(function GroupCard({
                     >
                         {groupStudents.length}
                     </span>
+
+                    {/* Actions - Prevent bubbling to prevent navigation when clicking actions */}
                     {!group.is_default && (
                         <>
                             {onEdit && (
@@ -180,41 +157,17 @@ export const GroupCard = memo(function GroupCard({
                             )}
                         </>
                     )}
+
                     <svg
-                        className={`w-5 h-5 text-text-secondary transition-transform ${isExpanded ? 'rotate-180' : ''
-                            }`}
+                        className="w-5 h-5 text-text-secondary"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                 </div>
             </div>
-
-            {/* Expanded Student List */}
-            {isExpanded && (
-                <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
-                    {groupStudents.length > 0 ? (
-                        groupStudents.map(student => (
-                            <StudentCard
-                                key={student.id}
-                                student={student}
-                                onReassign={() => onReassignStudent?.(student)}
-                                onDelete={() => onDeleteStudent?.(student)}
-                                selectable={selectable}
-                                isSelected={selectedStudentIds?.includes(student.id)}
-                                onToggleSelect={() => onToggleSelect?.(student.id)}
-                                onClick={() => onStudentClick?.(student)}
-                            />
-                        ))
-                    ) : (
-                        <div className="text-center py-4 text-text-secondary text-sm">
-                            No students in this group yet. Drag students here to assign them.
-                        </div>
-                    )}
-                </div>
-            )}
         </div>
     );
 });
