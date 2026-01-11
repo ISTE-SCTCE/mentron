@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export default async function RootPage() {
     // If Supabase is not configured, go directly to landing page
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-        redirect('/landing');
+        redirect('/landing/index.html');
     }
 
     try {
@@ -43,6 +43,6 @@ export default async function RootPage() {
     }
 
     // If no user or auth check fails, redirect to landing page
-    redirect('/landing');
+    redirect('/landing/index.html');
 }
 
