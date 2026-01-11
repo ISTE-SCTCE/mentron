@@ -39,11 +39,6 @@ const nextConfig: any = {
   // Optimize production builds
   productionBrowserSourceMaps: false,
 
-  // Ignore eslint errors during build to prevent deployment failure on warnings
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   // Ignore typescript errors during build
   typescript: {
     ignoreBuildErrors: true,
