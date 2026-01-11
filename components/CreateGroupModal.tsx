@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { DEPARTMENT_OPTIONS } from '@/lib/constants/departments';
 
 interface GroupData {
     id: string;
@@ -8,6 +9,7 @@ interface GroupData {
     description: string | null;
     year: number | null;
     color: string;
+    department?: string;
 }
 
 interface CreateGroupModalProps {
@@ -30,46 +32,33 @@ const COLORS = [
     { name: 'Yellow', value: '#eab308' },
 ];
 
-export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment, initialData }: CreateGroupModalProps) {
+export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment, userRole, initialData }: CreateGroupModalProps) {
     const [name, setName] = useState('');
+    const [department, setDepartment] = useState(userDepartment);
     const [year, setYear] = useState<number | ''>('');
     const [description, setDescription] = useState('');
     const [color, setColor] = useState('#06b6d4');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Reset or populate form when modal opens/closes or initialData changes
-    useState(() => {
-        if (isOpen && initialData) {
-            setName(initialData.name);
-            setYear(initialData.year || '');
-            setDescription(initialData.description || '');
-            setColor(initialData.color);
-        } else if (isOpen && !initialData) {
-            // Reset for create mode
-            setName('');
-            setYear('');
-            setDescription('');
-            setColor('#06b6d4');
-        }
-    });
-
-    // Also update when isOpen/initialData changes (using effect for safety)
     useEffect(() => {
         if (isOpen) {
             if (initialData) {
                 setName(initialData.name);
+                setDepartment(initialData.department || userDepartment);
                 setYear(initialData.year || '');
                 setDescription(initialData.description || '');
                 setColor(initialData.color);
             } else {
+                // Reset for create mode
                 setName('');
+                setDepartment(userDepartment);
                 setYear('');
                 setDescription('');
                 setColor('#06b6d4');
             }
         }
-    }, [isOpen, initialData]);
+    }, [isOpen, initialData, userDepartment]);
 
     if (!isOpen) return null;
 
@@ -87,7 +76,7 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment, i
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     name,
-                    department: userDepartment, // Department usually typically doesn't change on edit but kept for create
+                    department,
                     year: year || null,
                     description,
                     color
@@ -134,11 +123,29 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment, i
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="e.g., Study Group A, Project Team 1"
+                            placeholder="e.g., Study Group A"
                             required
                             className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:border-primary-cyan focus:outline-none focus:ring-2 focus:ring-primary-cyan/20 transition-all"
                         />
                     </div>
+
+                    {/* Department Selector (Only for Chairman) */}
+                    {userRole === 'chairman' && (
+                        <div>
+                            <label className="block text-sm font-medium mb-2">
+                                Department <span className="text-accent-pink">*</span>
+                            </label>
+                            <select
+                                value={department}
+                                onChange={(e) => setDepartment(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:border-primary-cyan focus:outline-none focus:ring-2 focus:ring-primary-cyan/20 transition-all"
+                            >
+                                {DEPARTMENT_OPTIONS.map(opt => (
+                                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
 
                     {/* Year (Optional) */}
                     <div>
@@ -166,7 +173,7 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment, i
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Brief description of the group's purpose..."
+                            placeholder="Brief description..."
                             rows={3}
                             className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:border-primary-cyan focus:outline-none focus:ring-2 focus:ring-primary-cyan/20 transition-all resize-none"
                         />

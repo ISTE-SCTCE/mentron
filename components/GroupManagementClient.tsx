@@ -449,6 +449,7 @@ export function GroupManagementClient({
                 }}
                 onSuccess={refreshData}
                 userDepartment={userDepartment}
+                userRole={userRole}
                 initialData={editingGroup}
 
             />
