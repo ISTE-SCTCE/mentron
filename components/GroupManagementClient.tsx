@@ -73,6 +73,7 @@ export function GroupManagementClient({
     const [students, setStudents] = useState<Student[]>(initialStudents);
     const [groups, setGroups] = useState<Group[]>(initialGroups);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [editingGroup, setEditingGroup] = useState<Group | null>(null);
     const [activeStudent, setActiveStudent] = useState<Student | null>(null);
     const [reassignStudent, setReassignStudent] = useState<Student | null>(null);
     const [deleteStudent, setDeleteStudent] = useState<Student | null>(null);
@@ -393,6 +394,10 @@ export function GroupManagementClient({
                                     group={group}
                                     students={studentsByGroup[group.id] || []}
                                     onDelete={() => handleDeleteGroup(group.id)}
+                                    onEdit={(group) => {
+                                        setEditingGroup(group);
+                                        setShowCreateModal(true);
+                                    }}
                                     onReassignStudent={handleReassignClick}
                                     onDeleteStudent={setDeleteStudent}
                                     selectable={true}
@@ -438,9 +443,13 @@ export function GroupManagementClient({
             {/* Create Group Modal */}
             <CreateGroupModal
                 isOpen={showCreateModal}
-                onClose={() => setShowCreateModal(false)}
+                onClose={() => {
+                    setShowCreateModal(false);
+                    setEditingGroup(null);
+                }}
                 onSuccess={refreshData}
                 userDepartment={userDepartment}
+                initialData={editingGroup}
 
             />
 

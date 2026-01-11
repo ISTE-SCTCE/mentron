@@ -1,6 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+interface GroupData {
+    id: string;
+    name: string;
+    description: string | null;
+    year: number | null;
+    color: string;
+}
 
 interface CreateGroupModalProps {
     isOpen: boolean;
@@ -8,6 +16,7 @@ interface CreateGroupModalProps {
     onSuccess: () => void;
     userDepartment: string;
     userRole?: 'execom' | 'chairman';
+    initialData?: GroupData | null;
 }
 
 const COLORS = [
@@ -21,13 +30,46 @@ const COLORS = [
     { name: 'Yellow', value: '#eab308' },
 ];
 
-export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment }: CreateGroupModalProps) {
+export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment, initialData }: CreateGroupModalProps) {
     const [name, setName] = useState('');
     const [year, setYear] = useState<number | ''>('');
     const [description, setDescription] = useState('');
     const [color, setColor] = useState('#06b6d4');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    // Reset or populate form when modal opens/closes or initialData changes
+    useState(() => {
+        if (isOpen && initialData) {
+            setName(initialData.name);
+            setYear(initialData.year || '');
+            setDescription(initialData.description || '');
+            setColor(initialData.color);
+        } else if (isOpen && !initialData) {
+            // Reset for create mode
+            setName('');
+            setYear('');
+            setDescription('');
+            setColor('#06b6d4');
+        }
+    });
+
+    // Also update when isOpen/initialData changes (using effect for safety)
+    useEffect(() => {
+        if (isOpen) {
+            if (initialData) {
+                setName(initialData.name);
+                setYear(initialData.year || '');
+                setDescription(initialData.description || '');
+                setColor(initialData.color);
+            } else {
+                setName('');
+                setYear('');
+                setDescription('');
+                setColor('#06b6d4');
+            }
+        }
+    }, [isOpen, initialData]);
 
     if (!isOpen) return null;
 
@@ -37,12 +79,15 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment }:
         setLoading(true);
 
         try {
-            const response = await fetch('/api/groups', {
-                method: 'POST',
+            const url = initialData ? `/api/groups/${initialData.id}` : '/api/groups';
+            const method = initialData ? 'PATCH' : 'POST';
+
+            const response = await fetch(url, {
+                method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     name,
-                    department: userDepartment,
+                    department: userDepartment, // Department usually typically doesn't change on edit but kept for create
                     year: year || null,
                     description,
                     color
@@ -52,14 +97,8 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment }:
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || 'Failed to create group');
+                throw new Error(data.error || `Failed to ${initialData ? 'update' : 'create'} group`);
             }
-
-            // Reset form
-            setName('');
-            setYear('');
-            setDescription('');
-            setColor('#06b6d4');
 
             onSuccess();
             onClose();
@@ -74,7 +113,7 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment }:
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="glass-card w-full max-w-md max-h-[90vh] overflow-y-auto">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold">Create New Group</h2>
+                    <h2 className="text-2xl font-bold">{initialData ? 'Edit Group' : 'Create New Group'}</h2>
                     <button
                         onClick={onClose}
                         className="p-2 rounded-lg hover:bg-white/10 transition-colors"
@@ -177,7 +216,7 @@ export function CreateGroupModal({ isOpen, onClose, onSuccess, userDepartment }:
                             disabled={loading || !name}
                             className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-primary-cyan to-secondary-purple hover:opacity-90 transition-opacity disabled:opacity-50 font-medium"
                         >
-                            {loading ? 'Creating...' : 'Create Group'}
+                            {loading ? 'Saving...' : initialData ? 'Save Changes' : 'Create Group'}
                         </button>
                     </div>
                 </form>
