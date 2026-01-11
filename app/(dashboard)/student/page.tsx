@@ -13,9 +13,10 @@ import { StudentDashboardClient } from '@/components/StudentDashboardClient';
  * - Fetches initial data
  * - Wraps client components with GroupAssignmentProvider for real-time updates
  * 
- * The actual dashboard content is rendered by StudentDashboardClient which
  * handles real-time group assignment changes.
  */
+export const dynamic = 'force-dynamic';
+
 export default async function StudentDashboard() {
     const supabase = await createClient();
 
