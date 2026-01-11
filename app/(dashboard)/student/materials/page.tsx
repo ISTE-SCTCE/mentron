@@ -4,6 +4,8 @@ import { DashboardHeader } from '@/components/DashboardHeader';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { MaterialViewButton } from '@/components/MaterialViewButton';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Student Materials Page
  * 
