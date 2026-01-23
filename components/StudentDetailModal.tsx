@@ -138,7 +138,7 @@ export function StudentDetailModal({
                     {loading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="h-20 bg-white/5 rounded-lg animate-pulse" />
+                                <div key={i} className="h-20 glass-panel rounded-lg animate-pulse" />
                             ))}
                         </div>
                     ) : details ? (
@@ -171,16 +171,16 @@ export function StudentDetailModal({
 
                                 {/* Info Grid */}
                                 <div className="grid grid-cols-2 gap-3">
-                                    <div className="p-3 rounded-lg bg-white/5">
-                                        <p className="text-xs text-text-secondary mb-1">Department</p>
-                                        <p className="font-semibold text-[var(--text-primary)]">{details.student.department}</p>
+                                    <div className="p-4 rounded-xl glass-panel">
+                                        <p className="text-xs text-text-secondary mb-1 uppercase tracking-wider">Department</p>
+                                        <p className="font-bold text-[var(--text-primary)]">{details.student.department}</p>
                                     </div>
-                                    <div className="p-3 rounded-lg bg-white/5">
-                                        <p className="text-xs text-text-secondary mb-1">Year</p>
-                                        <p className="font-semibold text-[var(--text-primary)]">Year {details.student.year}</p>
+                                    <div className="p-4 rounded-xl glass-panel">
+                                        <p className="text-xs text-text-secondary mb-1 uppercase tracking-wider">Year</p>
+                                        <p className="font-bold text-[var(--text-primary)]">Year {details.student.year}</p>
                                     </div>
-                                    <div className="p-3 rounded-lg bg-white/5">
-                                        <p className="text-xs text-text-secondary mb-1">Joined</p>
+                                    <div className="p-4 rounded-xl glass-panel">
+                                        <p className="text-xs text-text-secondary mb-1 uppercase tracking-wider">Joined</p>
                                         <p className="font-semibold text-[var(--text-primary)]">
                                             {formatRelativeTime(details.student.created_at)}
                                         </p>
@@ -188,9 +188,9 @@ export function StudentDetailModal({
                                             {formatDate(details.student.created_at)}
                                         </p>
                                     </div>
-                                    <div className="p-3 rounded-lg bg-white/5">
-                                        <p className="text-xs text-text-secondary mb-1">Last Activity</p>
-                                        <p className="font-semibold text-[var(--text-primary)]">
+                                    <div className="p-4 rounded-xl glass-panel">
+                                        <p className="text-xs text-text-secondary mb-1 uppercase tracking-wider">Last Activity</p>
+                                        <p className="font-bold text-[var(--text-primary)]">
                                             {details.lastActivity ? formatRelativeTime(details.lastActivity) : 'No activity'}
                                         </p>
                                     </div>
@@ -198,7 +198,7 @@ export function StudentDetailModal({
                             </div>
 
                             {/* Current Group */}
-                            <div className="p-4 rounded-xl bg-gradient-to-br from-primary-cyan/10 to-transparent border border-primary-cyan/20">
+                            <div className="p-5 rounded-2xl bg-gradient-to-br from-primary-cyan/20 to-primary-cyan/5 border border-primary-cyan/30 shadow-[0_0_20px_rgba(0,163,214,0.1)]">
                                 <div className="flex items-center gap-2 mb-2">
                                     <svg className="w-5 h-5 text-primary-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -227,18 +227,18 @@ export function StudentDetailModal({
 
                             {/* Activity Metrics */}
                             <div className="grid grid-cols-2 gap-3">
-                                <div className="p-4 rounded-xl bg-gradient-to-br from-secondary-purple/10 to-transparent border border-secondary-purple/20">
+                                <div className="p-5 rounded-2xl bg-gradient-to-br from-secondary-purple/20 to-secondary-purple/5 border border-secondary-purple/30 shadow-[0_0_20px_rgba(96,0,192,0.1)]">
                                     <div className="flex items-center gap-2 mb-2">
                                         <svg className="w-5 h-5 text-secondary-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
-                                        <h4 className="font-semibold text-[var(--text-primary)]">Materials Viewed</h4>
+                                        <h4 className="font-bold text-[var(--text-primary)]">Materials</h4>
                                     </div>
-                                    <p className="text-3xl font-bold text-secondary-purple">{details.materialsViewedCount}</p>
-                                    <p className="text-xs text-text-secondary mt-1">Total documents accessed</p>
+                                    <p className="text-4xl font-black text-secondary-purple tracking-tight">{details.materialsViewedCount}</p>
+                                    <p className="text-xs text-text-secondary mt-1 font-medium">Total documents</p>
                                 </div>
 
-                                <div className="p-4 rounded-xl bg-gradient-to-br from-yellow-500/10 to-transparent border border-yellow-500/20">
+                                <div className="p-5 rounded-2xl bg-gradient-to-br from-yellow-500/20 to-yellow-500/5 border border-yellow-500/30 shadow-[0_0_20px_rgba(234,179,8,0.1)]">
                                     <div className="flex items-center gap-2 mb-2">
                                         <svg className="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -262,8 +262,8 @@ export function StudentDetailModal({
                                     <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
                                         {details.assignmentHistory.map((entry, index) => (
                                             <div key={entry.id} className="relative pl-6 pb-3 border-l-2 border-white/10 last:border-transparent">
-                                                <div className="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-primary-cyan" />
-                                                <div className="p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                                                <div className="absolute left-[-5px] top-0 w-2 h-2 rounded-full bg-primary-cyan shadow-[0_0_10px_var(--primary-cyan)]" />
+                                                <div className="p-4 rounded-xl glass-panel group">
                                                     <div className="flex items-start justify-between gap-2 mb-2">
                                                         <div className="flex-1">
                                                             <p className="text-sm font-medium text-[var(--text-primary)]">

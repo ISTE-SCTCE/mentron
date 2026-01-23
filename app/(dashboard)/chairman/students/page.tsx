@@ -27,7 +27,7 @@ export default async function ChairmanStudentsPage() {
     }
 
     // Fetch all students with group information (Chairman sees all)
-    let studentsQuery = supabase
+    const studentsQuery = supabase
         .from('group_members')
         .select(`
             *,
@@ -38,7 +38,7 @@ export default async function ChairmanStudentsPage() {
     const { data: students } = await studentsQuery;
 
     // Fetch all groups with member counts
-    let groupsQuery = supabase
+    const groupsQuery = supabase
         .from('groups')
         .select(`
             *,

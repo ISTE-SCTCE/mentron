@@ -27,7 +27,7 @@ export function DepartmentSelector({
 }: DepartmentSelectorProps) {
     // Use constants directly instead of API
     const departments: Department[] = DEPARTMENTS.map(d => ({
-        id: d.code,
+        id: d.name, // Use Name as ID
         code: d.code,
         name: d.name,
         description: d.description,
@@ -41,8 +41,8 @@ export function DepartmentSelector({
                 <button
                     onClick={() => onDepartmentChange(null, null)}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedDeptId === null
-                            ? 'bg-secondary-purple text-white shadow-lg shadow-secondary-purple/25'
-                            : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
+                        ? 'bg-secondary-purple text-white shadow-lg shadow-secondary-purple/25'
+                        : 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
                         }`}
                 >
                     All Departments
@@ -57,16 +57,16 @@ export function DepartmentSelector({
                         '--dept-color': dept.color
                     } as React.CSSProperties}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedDeptId === dept.id
-                            ? 'text-white shadow-lg'
-                            : dept.is_active
-                                ? 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
-                                : 'bg-white/5 text-[var(--text-secondary)]/50 cursor-not-allowed'
+                        ? 'text-white shadow-lg'
+                        : dept.is_active
+                            ? 'bg-white/5 hover:bg-white/10 text-[var(--text-secondary)]'
+                            : 'bg-white/5 text-[var(--text-secondary)]/50 cursor-not-allowed'
                         }`}
                     {...(selectedDeptId === dept.id && {
                         style: { backgroundColor: dept.color, '--dept-color': dept.color } as React.CSSProperties
                     })}
                 >
-                    <span>{dept.code}</span>
+                    <span>{dept.name}</span>
                 </button>
             ))}
         </div>

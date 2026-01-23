@@ -56,11 +56,11 @@ export const StudentCard = memo(function StudentCard({
             {...attributes}
             onClick={onClick} // Main card click opens detail view
             className={`
-                group flex items-center gap-3 p-2 rounded-lg 
-                ${isSelected ? 'bg-primary-cyan/20 ring-1 ring-primary-cyan' : 'bg-white/5 hover:bg-white/10'} 
-                transition-all cursor-pointer
-                ${isDragging ? 'opacity-50 scale-95' : ''}
-            `}
+                    group flex items-center gap-3 p-3 rounded-xl 
+                    ${isSelected ? 'bg-primary-cyan/20 ring-1 ring-primary-cyan' : 'glass-panel'} 
+                    cursor-pointer
+                    ${isDragging ? 'opacity-50 scale-95' : ''}
+                `}
         >
             {/* Checkbox for selection mode - visible on hover or when selected */}
             {selectable && (

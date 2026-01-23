@@ -28,42 +28,42 @@ export const DEPARTMENTS: Department[] = [
         name: 'Computer Science',
         shortName: 'CS',
         description: 'Department of Computer Science',
-        color: '#3b82f6', // Blue
+        color: '#3b82f6',
     },
     {
-        code: 'CS-AIML',
-        name: 'Computer Science (AI & ML)',
-        shortName: 'CS (AI & ML)',
-        description: 'Department of Computer Science specializing in Artificial Intelligence and Machine Learning',
-        color: '#8b5cf6', // Purple
+        code: 'CS(AI&ML)',
+        name: 'Computer Science with AI & ML',
+        shortName: 'CS(AI&ML)',
+        description: 'Department of Computer Science specializing in AI & ML',
+        color: '#8b5cf6',
     },
     {
         code: 'ECE',
-        name: 'Electronics and Communication',
+        name: 'Electronics and Communication Engineering',
         shortName: 'ECE',
-        description: 'Department of Electronics and Communication',
-        color: '#f59e0b', // Amber
+        description: 'Department of Electronics and Communication Engineering',
+        color: '#f59e0b',
     },
     {
         code: 'ME',
         name: 'Mechanical Engineering',
         shortName: 'ME',
         description: 'Department of Mechanical Engineering',
-        color: '#ef4444', // Red
+        color: '#ef4444',
     },
     {
-        code: 'AE',
-        name: 'Automobile Engineering',
-        shortName: 'AE',
-        description: 'Department of Automobile Engineering',
-        color: '#10b981', // Emerald
+        code: 'MAE',
+        name: 'Mechanical Automobile Engineering',
+        shortName: 'MAE',
+        description: 'Department of Mechanical Automobile Engineering',
+        color: '#10b981',
     },
     {
         code: 'BT',
-        name: 'Biotechnology',
+        name: 'Biotechnology and Biochemical Engineering',
         shortName: 'BT',
-        description: 'Department of Biotechnology',
-        color: '#ec4899', // Pink
+        description: 'Department of Biotechnology and Biochemical Engineering',
+        color: '#ec4899',
     },
 ];
 
@@ -106,8 +106,8 @@ export function isValidDepartment(code: string): boolean {
  * Department options for select inputs
  */
 export const DEPARTMENT_OPTIONS = DEPARTMENTS.map(d => ({
-    value: d.code,
-    label: `${d.code} - ${d.name}`,
+    value: d.name, // Use Full Name as value for consistency
+    label: d.name, // Display Full Name
     color: d.color,
 }));
 

@@ -19,7 +19,14 @@ export default function RegisterPage() {
     const router = useRouter();
     const supabase = createClient();
 
-    const departments = ['CSE', 'ECE', 'EEE', 'ME', 'CE'];
+    const departments = [
+        'Computer Science',
+        'Computer Science with AI & ML',
+        'Electronics and Communication Engineering',
+        'Mechanical Engineering',
+        'Mechanical Automobile Engineering',
+        'Biotechnology and Biochemical Engineering'
+    ];
     const years = [1, 2, 3, 4];
 
     const handleRegister = async (e: React.FormEvent) => {

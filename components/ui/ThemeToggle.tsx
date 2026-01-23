@@ -12,7 +12,7 @@ export function ThemeToggle() {
             const savedTheme = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
             const systemDark = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)').matches : false;
 
-            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            if ((savedTheme === 'dark' || (!savedTheme && systemDark)) && !isDark) {
                 setIsDark(true);
                 document.documentElement.classList.add('dark');
             }

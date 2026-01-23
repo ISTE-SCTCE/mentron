@@ -3,9 +3,9 @@ import { notFound, redirect } from 'next/navigation';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { GroupDetailView } from '@/components/GroupDetailView';
 
-export default async function GroupDetailPage({ params }: { params: { groupId: string } }) {
+export default async function GroupDetailPage({ params }: { params: Promise<{ groupId: string }> }) {
     const supabase = await createClient();
-    const { groupId } = params;
+    const { groupId } = await params;
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect('/login');
@@ -46,7 +46,7 @@ export default async function GroupDetailPage({ params }: { params: { groupId: s
     // Current "expanded privileges" allow Execom to see/edit ANY group.
     // So no extra check needed here.
 
-    let query = supabase.from('students').select('*').order('created_at', { ascending: false });
+    let query = supabase.from('group_members').select('*').order('created_at', { ascending: false });
 
     if (groupId === 'unassigned') {
         query = query.is('group_id', null);

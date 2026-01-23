@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS departments (
 
 INSERT INTO departments (code, name, description, color) VALUES
     ('CS', 'Computer Science', 'Department of Computer Science', '#3b82f6'),
-    ('CS-AIML', 'Computer Science (AI & ML)', 'Department of Computer Science specializing in Artificial Intelligence and Machine Learning', '#8b5cf6'),
-    ('ECE', 'Electronics and Communication', 'Department of Electronics and Communication', '#f59e0b'),
+    ('CS(AI&ML)', 'Computer Science with AI & ML', 'Department of Computer Science specializing in AI & ML', '#8b5cf6'),
+    ('ECE', 'Electronics and Communication Engineering', 'Department of Electronics and Communication Engineering', '#f59e0b'),
     ('ME', 'Mechanical Engineering', 'Department of Mechanical Engineering', '#ef4444'),
-    ('AE', 'Automobile Engineering', 'Department of Automobile Engineering', '#10b981'),
-    ('BT', 'Biotechnology', 'Department of Biotechnology', '#ec4899')
+    ('MAE', 'Mechanical Automobile Engineering', 'Department of Mechanical Automobile Engineering', '#10b981'),
+    ('BT', 'Biotechnology and Biochemical Engineering', 'Department of Biotechnology and Biochemical Engineering', '#ec4899')
 ON CONFLICT (code) DO UPDATE SET
     name = EXCLUDED.name,
     description = EXCLUDED.description,

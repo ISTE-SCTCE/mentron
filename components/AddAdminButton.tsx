@@ -121,10 +121,12 @@ export function AddAdminButton() {
                                     className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 focus:border-primary-cyan focus:outline-none focus:ring-2 focus:ring-primary-cyan/20 transition-all"
                                 >
                                     <option value="">Select Department</option>
-                                    <option value="CSE">Computer Science</option>
-                                    <option value="ECE">Electronics & Communication</option>
-                                    <option value="EEE">Electrical & Electronics</option>
-                                    <option value="ME">Mechanical Engineering</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Computer Science with AI & ML">Computer Science with AI & ML</option>
+                                    <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    <option value="Mechanical Automobile Engineering">Mechanical Automobile Engineering</option>
+                                    <option value="Biotechnology and Biochemical Engineering">Biotechnology and Biochemical Engineering</option>
                                 </select>
                             </div>
 

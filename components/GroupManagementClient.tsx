@@ -69,14 +69,6 @@ export function GroupManagementClient({
     // Get initial tab from URL or default to 'groups'
     const initialTab = (searchParams.get('tab') as TabType) || 'groups';
 
-    // Handle Deep Linking for Student Details
-    useEffect(() => {
-        const deepLinkStudentId = searchParams.get('studentId');
-        if (deepLinkStudentId) {
-            setDetailStudentId(deepLinkStudentId);
-            setShowDetailModal(true);
-        }
-    }, [searchParams]);
 
     const [activeTab, setActiveTab] = useState<TabType>(initialTab);
     const [students, setStudents] = useState<Student[]>(initialStudents);
@@ -105,6 +97,15 @@ export function GroupManagementClient({
     // Student detail modal state
     const [detailStudentId, setDetailStudentId] = useState<string | null>(null);
     const [showDetailModal, setShowDetailModal] = useState(false);
+
+    // Handle Deep Linking for Student Details
+    useEffect(() => {
+        const deepLinkStudentId = searchParams.get('studentId');
+        if (deepLinkStudentId) {
+            setDetailStudentId(deepLinkStudentId);
+            setShowDetailModal(true);
+        }
+    }, [searchParams]);
 
     // Update URL when tab changes
     const handleTabChange = useCallback((tab: TabType) => {

@@ -23,7 +23,7 @@ export async function GET() {
         }
 
         // Fetch students with group information
-        let query = supabase
+        const query = supabase
             .from('group_members')
             .select(`
                 *,

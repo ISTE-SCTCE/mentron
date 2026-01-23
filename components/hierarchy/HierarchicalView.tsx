@@ -108,7 +108,7 @@ export function HierarchicalView({
                     department: dept,
                     groups: groups.filter(g =>
                         g.year === year.year_number &&
-                        g.department === dept.code
+                        g.department === dept.name // Match by Name
                     )
                 })).filter(d => d.groups.length > 0 || userRole === 'chairman')
             }));
@@ -265,7 +265,7 @@ export function HierarchicalView({
                                                     className="font-medium"
                                                     style={{ color: department.color }}
                                                 >
-                                                    {department.code}
+                                                    {department.name}
                                                 </span>
                                                 <span className="text-xs text-[var(--text-secondary)]">
                                                     {groups.length} group{groups.length !== 1 ? 's' : ''}

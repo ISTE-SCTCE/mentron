@@ -56,7 +56,7 @@ export async function POST(request: Request) {
             targetGroup = group;
         }
 
-        // Fetch current student info for audit log
+        // Fetch current student info for validation and audit log
         const { data: currentStudents } = await supabase
             .from('group_members')
             .select(`
@@ -69,16 +69,20 @@ export async function POST(request: Request) {
             `)
             .in('id', studentIds);
 
-        // Update the students' group_id
-        const updateData: Record<string, unknown> = { group_id: groupId || null };
-
-        // Also update department and year if assigning to a specific group
-        if (targetGroup) {
-            updateData.department = targetGroup.department;
-            if (targetGroup.year) {
-                updateData.year = targetGroup.year;
+        // Check for department mismatch if assigning to a group (not unassigning)
+        if (targetGroup && currentStudents) {
+            const mismatchedStudents = currentStudents.filter(s => s.department !== targetGroup.department);
+            if (mismatchedStudents.length > 0) {
+                return NextResponse.json(
+                    { error: `Cannot assign students from different departments to '${targetGroup.name}'. Matched students: ${mismatchedStudents.map(s => s.email).join(', ')}` },
+                    { status: 400 }
+                );
             }
         }
+
+        // Update the students' group_id
+        // NOTE: We do NOT update department/year automatically anymore to prevent accidental transfers.
+        const updateData: Record<string, unknown> = { group_id: groupId || null };
 
         const { data: updatedStudents, error } = await supabase
             .from('group_members')

@@ -73,8 +73,11 @@ export const GroupCard = memo(function GroupCard({
         <div
             ref={setNodeRef}
             onClick={handleCardClick}
-            className={`glass-card transition-all cursor-pointer hover:bg-white/5 ${isOver ? 'ring-2 ring-primary-cyan scale-105' : ''}`}
+            className={`glass-card cursor-pointer relative overflow-hidden group ${isOver ? 'ring-2 ring-primary-cyan scale-105' : ''}`}
         >
+            {/* Gloss Highlight */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
             {/* Group Header */}
             <div className="flex items-center justify-between p-2 rounded-lg -m-2 transition-colors">
                 <div className="flex items-center gap-3 flex-1 min-w-0">

@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useGroupAssignmentContext, type Group, type StudentAssignment } from '@/components/GroupAssignmentProvider';
-import { UnassignedStudentBanner } from '@/components/UnassignedStudentBanner';
+import { useGroupAssignmentContext, type StudentAssignment } from '@/components/GroupAssignmentProvider';
+import { StudentGroupCard, type Group } from '@/components/StudentGroupCard';
 import { MaterialViewButton } from '@/components/MaterialViewButton';
 import { StatCard } from '@/components/StatCard';
 import { createClient } from '@/lib/supabase/client';
+import { useToast } from '@/lib/context/ToastContext';
 
 /**
  * StudentDashboardClient - Real-time student dashboard
@@ -31,14 +32,24 @@ interface Material {
 
 interface StudentDashboardClientProps {
     initialMaterials: Material[];
+    allGroups: Group[];
 }
 
-export function StudentDashboardClient({ initialMaterials }: StudentDashboardClientProps) {
+export function StudentDashboardClient({ initialMaterials, allGroups }: StudentDashboardClientProps) {
+    const { showToast } = useToast();
     const { assignment, isAssigned, isLoading, error, refetch } = useGroupAssignmentContext();
     const [materials, setMaterials] = useState<Material[]>(initialMaterials);
     const [isFetchingMaterials, setIsFetchingMaterials] = useState(false);
 
     const studentGroup = assignment?.group;
+
+    const handleGroupClick = (group: Group) => {
+        if (group.id === studentGroup?.id) {
+            return;
+        }
+
+        showToast("Access Restricted: You must be a member to view this group.");
+    };
     const userName = assignment?.email?.split('@')[0] || 'Student';
 
     // Fetch materials for current group
@@ -155,37 +166,25 @@ export function StudentDashboardClient({ initialMaterials }: StudentDashboardCli
     }
 
     // Unassigned state
-    if (!isAssigned) {
-        return (
-            <UnassignedStudentBanner
-                studentName={assignment?.name || userName}
-                department={assignment?.department}
-            />
-        );
-    }
+    // Removed unassigned check to allow viewing groups
 
     // Assigned state - show full dashboard
     return (
         <>
-            {/* Group Badge */}
-            {studentGroup && (
-                <div className="mb-6 flex items-center gap-3">
-                    <span
-                        className="px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2"
-                        style={{
-                            backgroundColor: `${studentGroup.color}20`,
-                            color: studentGroup.color,
-                            border: `1px solid ${studentGroup.color}40`
-                        }}
-                    >
-                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: studentGroup.color }}></span>
-                        {studentGroup.name}
-                    </span>
-                    <span className="text-sm text-[var(--text-secondary)]">
-                        {studentGroup.department} • Year {studentGroup.year}
-                    </span>
+            {/* Groups Grid */}
+            <div className="mb-8">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4">Available Groups</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {allGroups.map(group => (
+                        <StudentGroupCard
+                            key={group.id}
+                            group={group}
+                            isAssigned={group.id === studentGroup?.id}
+                            onClick={() => handleGroupClick(group)}
+                        />
+                    ))}
                 </div>
-            )}
+            </div>
 
             {/* Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-10">
@@ -301,7 +300,7 @@ export function StudentDashboardClient({ initialMaterials }: StudentDashboardCli
                     </svg>
                     <h3 className="text-lg sm:text-xl font-semibold mb-2">No Materials Yet</h3>
                     <p className="text-text-secondary text-sm sm:text-base">
-                        Study materials for {studentGroup?.department} Year {studentGroup?.year} will appear here.
+                        {studentGroup ? `Study materials for ${studentGroup.department} Year ${studentGroup.year} will appear here.` : 'Join a group to view study materials.'}
                     </p>
                 </div>
             )}

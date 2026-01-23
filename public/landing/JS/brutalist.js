@@ -12,7 +12,7 @@
     // CONFIGURATION
     // ==========================================
     const CONFIG = {
-        preloaderDuration: 2000,
+        preloaderDuration: 500,
         scrollThreshold: 50,
         animationDuration: 0.8,
         staggerDelay: 0.1

@@ -1,0 +1,298 @@
+﻿
+> mentron-app@0.1.0 lint
+> eslint
+
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(auth)\login\page.tsx
+   3:20  warning  'useEffect' is defined but never used             @typescript-eslint/no-unused-vars
+   7:10  warning  'AUTH_CONFIG' is defined but never used           @typescript-eslint/no-unused-vars
+  16:12  warning  'isLoggingIn' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  87:23  error    Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(auth)\register\page.tsx
+  98:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\analytics\page.tsx
+  46:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  61:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  61:61  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\chairman\notifications\page.tsx
+  17:64  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  30:18  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  85:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\chairman\page.tsx
+  48:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\chairman\students\page.tsx
+  30:9  error  'studentsQuery' is never reassigned. Use 'const' instead  prefer-const
+  41:9  error  'groupsQuery' is never reassigned. Use 'const' instead    prefer-const
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\execom\notifications\page.tsx
+  16:64  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:18  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  84:18  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\execom\page.tsx
+  183:55  warning  'index' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\student\notifications\page.tsx
+  116:36  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\(dashboard)\student\page.tsx
+  47:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\announcements\route.ts
+  128:27  warning  'request' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\auth\logout\route.ts
+  3:10  warning  'NextResponse' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\calendar\events\[id]\route.ts
+  39:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\calendar\events\route.ts
+   33:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\example\students\route.ts
+  107:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  207:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\groups\[groupId]\route.ts
+   69:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  139:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\groups\route.ts
+   50:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  113:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\notifications\announce\route.ts
+  77:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\notifications\mark-all-read\route.ts
+  22:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\notifications\mark-read\[id]\route.ts
+  28:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\notifications\route.ts
+  33:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\students\[id]\route.ts
+   86:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  154:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\students\promote\route.ts
+  113:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\app\api\students\route.ts
+  26:13  error  'query' is never reassigned. Use 'const' instead  prefer-const
+  44:21  error  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\AddAdminButton.tsx
+  46:18  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\CreateGroupModal.tsx
+  94:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\DashboardHeader.tsx
+    8:10  warning  'useToast' is defined but never used                             @typescript-eslint/no-unused-vars
+   42:65  warning  'onSignOut' is defined but never used                            @typescript-eslint/no-unused-vars
+   46:19  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   47:20  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   48:17  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   49:19  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  217:58  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  217:72  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\DeleteStudentModal.tsx
+  47:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\GroupCard.tsx
+  47:5  warning  'onDeleteStudent' is defined but never used     @typescript-eslint/no-unused-vars
+  48:5  warning  'onReassignStudent' is defined but never used   @typescript-eslint/no-unused-vars
+  50:5  warning  'selectable' is defined but never used          @typescript-eslint/no-unused-vars
+  51:5  warning  'selectedStudentIds' is defined but never used  @typescript-eslint/no-unused-vars
+  52:5  warning  'onToggleSelect' is defined but never used      @typescript-eslint/no-unused-vars
+  53:5  warning  'onSelectAll' is defined but never used         @typescript-eslint/no-unused-vars
+  54:5  warning  'onStudentClick' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\GroupManagementClient.tsx
+  15:10  warning  'useToast' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  76:13  error    Error: Cannot access variable before it is declared
+
+`setDetailStudentId` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\GroupManagementClient.tsx:76:13
+  74 |         const deepLinkStudentId = searchParams.get('studentId');
+  75 |         if (deepLinkStudentId) {
+> 76 |             setDetailStudentId(deepLinkStudentId);
+     |             ^^^^^^^^^^^^^^^^^^ `setDetailStudentId` accessed before it is declared
+  77 |             setShowDetailModal(true);
+  78 |         }
+  79 |     }, [searchParams]);
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\GroupManagementClient.tsx:106:29
+  104 |
+  105 |     // Student detail modal state
+> 106 |     const [detailStudentId, setDetailStudentId] = useState<string | null>(null);
+      |                             ^^^^^^^^^^^^^^^^^^ `setDetailStudentId` is declared here
+  107 |     const [showDetailModal, setShowDetailModal] = useState(false);
+  108 |
+  109 |     // Update URL when tab changes  react-hooks/immutability
+  77:13  error    Error: Cannot access variable before it is declared
+
+`setShowDetailModal` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\GroupManagementClient.tsx:77:13
+  75 |         if (deepLinkStudentId) {
+  76 |             setDetailStudentId(deepLinkStudentId);
+> 77 |             setShowDetailModal(true);
+     |             ^^^^^^^^^^^^^^^^^^ `setShowDetailModal` accessed before it is declared
+  78 |         }
+  79 |     }, [searchParams]);
+  80 |
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\GroupManagementClient.tsx:107:29
+  105 |     // Student detail modal state
+  106 |     const [detailStudentId, setDetailStudentId] = useState<string | null>(null);
+> 107 |     const [showDetailModal, setShowDetailModal] = useState(false);
+      |                             ^^^^^^^^^^^^^^^^^^ `setShowDetailModal` is declared here
+  108 |
+  109 |     // Update URL when tab changes
+  110 |     const handleTabChange = useCallback((tab: TabType) => {       react-hooks/immutability
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\MaterialUploadForm.tsx
+   19:38  warning  'userRole' is defined but never used      @typescript-eslint/no-unused-vars
+  153:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\MiniBarChart.tsx
+  21:13  warning  'max' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\NotificationsPanel.tsx
+  25:12  warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  25:21  warning  'setLoading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  41:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\NotificationsPanel.tsx:41:9
+  39 |
+  40 |     useEffect(() => {
+> 41 |         fetchNotifications();
+     |         ^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  42 |         // Poll for new notifications every 30 seconds
+  43 |         const interval = setInterval(fetchNotifications, 30000);
+  44 |         return () => clearInterval(interval);  react-hooks/set-state-in-effect
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\SettingsClient.tsx
+   79:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\StudentDashboardClient.tsx
+   4:42  warning  'StudentAssignment' is defined but never used                                                                    @typescript-eslint/no-unused-vars
+  53:11  warning  'userName' is assigned a value but never used                                                                    @typescript-eslint/no-unused-vars
+  95:8   warning  React Hook useEffect has a missing dependency: 'studentGroup'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\StudentDetailModal.tsx
+   69:8    warning  React Hook useEffect has a missing dependency: 'fetchStudentDetails'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  263:80   warning  'index' is defined but never used                                                                                       @typescript-eslint/no-unused-vars
+  287:112  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                         react/no-unescaped-entities
+  287:127  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                         react/no-unescaped-entities
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\StudentsClient.tsx
+    3:20  warning  'useEffect' is defined but never used     @typescript-eslint/no-unused-vars
+  164:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\UnassignedStudentBanner.tsx
+   59:32  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  122:87  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\assignment\AssignmentHistory.tsx
+  31:8  warning  React Hook useEffect has a missing dependency: 'fetchHistory'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\assignment\AssignmentsClient.tsx
+  16:37  warning  'userRole' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\assignment\BulkReassignmentModal.tsx
+  107:19  warning  'data' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\assignment\UnassignedStudentsList.tsx
+  35:8  warning  React Hook useEffect has a missing dependency: 'fetchUnassigned'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\hierarchy\HierarchicalView.tsx
+  62:8  warning  React Hook useEffect has a missing dependency: 'fetchHierarchy'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\landing\ParticleBurst.tsx
+   20:11  warning  'xOffset' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  104:15  warning  'state' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\landing\StorySection.tsx
+  174:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\ui\ThemeToggle.tsx
+  16:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\components\ui\ThemeToggle.tsx:16:17
+  14 |
+  15 |             if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+> 16 |                 setIsDark(true);
+     |                 ^^^^^^^^^ Avoid calling setState() directly within an effect
+  17 |                 document.documentElement.classList.add('dark');
+  18 |             }
+  19 |         } catch (e) {  react-hooks/set-state-in-effect
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\hooks\useGroupAssignment.ts
+  143:56  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\lib\db\operations.test.ts
+    6:37  warning  'DbResult' is defined but never used      @typescript-eslint/no-unused-vars
+    7:10  warning  'createClient' is defined but never used  @typescript-eslint/no-unused-vars
+   62:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  238:33  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  250:33  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\lib\db\operations.ts
+   18:86  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   40:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   44:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   85:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  137:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  160:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  175:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  198:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  213:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  255:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  276:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  294:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  307:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\lib\hooks\useRealTimeAnalytics.ts
+  111:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\lib\supabase\middleware.ts
+  19:58  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\yuuge\OneDrive\Desktop\MENTRON\next.config.ts
+  1:15  warning  'NextConfig' is defined but never used    @typescript-eslint/no-unused-vars
+  3:19  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 116 problems (74 errors, 42 warnings)
+  3 errors and 0 warnings potentially fixable with the `--fix` option.
+

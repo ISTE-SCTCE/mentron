@@ -6,6 +6,7 @@ import { StatCard } from '@/components/StatCard';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { CalendarWidget } from '@/components/CalendarWidget';
 import { AddAdminButton } from '@/components/AddAdminButton';
+import { DEPARTMENTS } from '@/lib/constants';
 
 export default async function ChairmanDashboard() {
     const supabase = await createClient();
@@ -131,13 +132,11 @@ export default async function ChairmanDashboard() {
     }, {} as Record<string, number>) || {};
 
     const totalCalculatedStudents = allStudents?.length || 1;
-    const departmentData = [
-        { name: 'ECE', count: departmentCounts['ECE'] || 0, color: 'from-blue-500 to-cyan-500' },
-        { name: 'CSE', count: departmentCounts['CSE'] || 0, color: 'from-purple-500 to-pink-500' },
-        { name: 'EEE', count: departmentCounts['EEE'] || 0, color: 'from-cyan-500 to-blue-500' },
-        { name: 'ME', count: departmentCounts['ME'] || 0, color: 'from-pink-500 to-purple-500' },
-        { name: 'CE', count: departmentCounts['CE'] || 0, color: 'from-green-500 to-emerald-500' },
-    ].filter(d => d.count > 0); // Hide empty departments
+    const departmentData = DEPARTMENTS.map(d => ({
+        name: d.name,
+        count: departmentCounts[d.name] || departmentCounts[d.code] || 0, // Check both name and code for compatibility
+        color: `bg-[${d.color}]` // Use arbitrary value syntax for hex colors
+    })).filter(d => d.count > 0);
 
     // Extract user name from email
     const userName = admin.position || admin.email.split('@')[0];

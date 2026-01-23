@@ -55,6 +55,12 @@ export default async function StudentDashboard() {
         initialMaterials = materialsData || [];
     }
 
+    // Fetch all groups for display
+    const { data: allGroups } = await supabase
+        .from('groups')
+        .select('*')
+        .order('name');
+
     const userName = student.email.split('@')[0];
 
     const handleSignOut = async () => {
@@ -83,7 +89,7 @@ export default async function StudentDashboard() {
 
                     {/* Real-time Dashboard Content */}
                     <GroupAssignmentProvider userId={user.id}>
-                        <StudentDashboardClient initialMaterials={initialMaterials} />
+                        <StudentDashboardClient initialMaterials={initialMaterials} allGroups={allGroups || []} />
                     </GroupAssignmentProvider>
 
                     {/* Mobile Bottom Padding for Safe Area */}
