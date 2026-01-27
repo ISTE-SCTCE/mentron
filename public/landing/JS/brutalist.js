@@ -43,7 +43,178 @@
         initAnimations();
         initEventListeners();
 
+        initMagneticButtons();
+        initHeroAnimation();
+        init3DTilt();
+        initCustomCursor();
+        initGlitchEffect();
+
         console.log('🚀 ISTE SCTCE Brutalist Site initialized');
+    }
+
+    // ==========================================
+    // MAGNETIC BUTTONS
+    // ==========================================
+    function initMagneticButtons() {
+        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-link, .btn-event, .btn-view-all, .btn-hiring');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'elastic.out(1, 0.5)'
+                });
+            });
+        });
+    }
+
+    // ==========================================
+    // HERO TEXT ANIMATION
+    // ==========================================
+    function initHeroAnimation() {
+        const titleLines = document.querySelectorAll('.title-line');
+        titleLines.forEach(line => {
+            const text = line.textContent;
+            line.innerHTML = '';
+            line.style.opacity = '1';
+
+            // Wrap each char
+            [...text].forEach(char => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.display = 'inline-block';
+                span.style.opacity = '0';
+                span.style.transform = 'translateY(100%)';
+                line.appendChild(span);
+            });
+        });
+
+        // Animate chars
+        const chars = document.querySelectorAll('.title-line span');
+        gsap.to(chars, {
+            y: 0,
+            opacity: 1,
+            stagger: 0.03,
+            duration: 1,
+            ease: 'power4.out',
+            delay: 0.5
+        });
+    }
+
+    // ==========================================
+    // 3D TILT EFFECT
+    // ==========================================
+    function init3DTilt() {
+        const tiltElements = document.querySelectorAll('.forum-card, .event-item');
+
+        tiltElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                gsap.to(el, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    transformPerspective: 1000,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+            });
+
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    rotationX: 0,
+                    rotationY: 0,
+                    duration: 0.7,
+                    ease: 'elastic.out(1, 0.5)'
+                });
+            });
+        });
+    }
+
+    // ==========================================
+    // CUSTOM CURSOR
+    // ==========================================
+    function initCustomCursor() {
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorCircle = document.querySelector('.cursor-circle');
+
+        if (!cursorDot || !cursorCircle) return;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            gsap.to(cursorDot, {
+                x: mouseX,
+                y: mouseY,
+                duration: 0.1
+            });
+        });
+
+        // Lagging follower
+        gsap.ticker.add(() => {
+            const dt = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio());
+            cursorX += (mouseX - cursorX) * dt;
+            cursorY += (mouseY - cursorY) * dt;
+
+            gsap.set(cursorCircle, { x: cursorX, y: cursorY });
+        });
+
+        // Hover effects
+        const hoverables = document.querySelectorAll('a, button, .forum-card, .event-item');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursorCircle.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursorCircle.classList.remove('hovered'));
+        });
+    }
+
+    // ==========================================
+    // GLITCH EFFECT
+    // ==========================================
+    function initGlitchEffect() {
+        const titles = document.querySelectorAll('.section-title, .hero-title, .glitch-target');
+
+        titles.forEach(title => {
+            title.classList.add('glitch-text');
+            title.setAttribute('data-text', title.textContent);
+
+            // Randomly trigger stronger glitch
+            setInterval(() => {
+                if (Math.random() > 0.95) {
+                    title.style.animation = 'none';
+                    title.offsetHeight; /* trigger reflow */
+                    title.style.animation = null;
+                }
+            }, 3000);
+        });
     }
 
     // ==========================================
