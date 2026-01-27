@@ -51,12 +51,20 @@ export function Navigation({ sections }: NavigationProps) {
                     ))}
                 </div>
 
-                <Link
-                    href="/login"
-                    className="btn btn-primary text-sm"
-                >
-                    Get Started
-                </Link>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="/login"
+                        className="btn btn-secondary text-sm backdrop-blur-md bg-white/5 border-white/10 hover:bg-white/10"
+                    >
+                        Login
+                    </Link>
+                    <Link
+                        href="/register"
+                        className="btn btn-primary text-sm shadow-lg shadow-primary-cyan/20 hover:shadow-primary-cyan/40"
+                    >
+                        Get Started
+                    </Link>
+                </div>
             </div>
         </motion.nav>
     );
