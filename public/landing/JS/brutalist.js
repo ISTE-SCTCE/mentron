@@ -46,8 +46,6 @@
         initMagneticButtons();
         initHeroAnimation();
         init3DTilt();
-        initCustomCursor();
-        initGlitchEffect();
 
         console.log('🚀 ISTE SCTCE Brutalist Site initialized');
     }
@@ -151,69 +149,6 @@
                     ease: 'elastic.out(1, 0.5)'
                 });
             });
-        });
-    }
-
-    // ==========================================
-    // CUSTOM CURSOR
-    // ==========================================
-    function initCustomCursor() {
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorCircle = document.querySelector('.cursor-circle');
-
-        if (!cursorDot || !cursorCircle) return;
-
-        let mouseX = 0;
-        let mouseY = 0;
-        let cursorX = 0;
-        let cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            gsap.to(cursorDot, {
-                x: mouseX,
-                y: mouseY,
-                duration: 0.1
-            });
-        });
-
-        // Lagging follower
-        gsap.ticker.add(() => {
-            const dt = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio());
-            cursorX += (mouseX - cursorX) * dt;
-            cursorY += (mouseY - cursorY) * dt;
-
-            gsap.set(cursorCircle, { x: cursorX, y: cursorY });
-        });
-
-        // Hover effects
-        const hoverables = document.querySelectorAll('a, button, .forum-card, .event-item');
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => cursorCircle.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursorCircle.classList.remove('hovered'));
-        });
-    }
-
-    // ==========================================
-    // GLITCH EFFECT
-    // ==========================================
-    function initGlitchEffect() {
-        const titles = document.querySelectorAll('.section-title, .hero-title, .glitch-target');
-
-        titles.forEach(title => {
-            title.classList.add('glitch-text');
-            title.setAttribute('data-text', title.textContent);
-
-            // Randomly trigger stronger glitch
-            setInterval(() => {
-                if (Math.random() > 0.95) {
-                    title.style.animation = 'none';
-                    title.offsetHeight; /* trigger reflow */
-                    title.style.animation = null;
-                }
-            }, 3000);
         });
     }
 
